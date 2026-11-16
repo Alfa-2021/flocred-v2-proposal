@@ -502,9 +502,57 @@ summary::-webkit-details-marker{display:none}
 .kpi b{font-size:clamp(16px,4.6vw,20px)}
 .kpi b.num{white-space:nowrap}
 @media (max-width:360px){.kpi b{font-size:13.5px!important}}
+
+/* ===== v2.4: readable 3D stack, timeline labels, mixed light/dark sections, theme switch ===== */
+/* 3D activity stack: a tilted column, so no card ever covers another card's text */
+.stage3d{height:auto;padding:4px 0 18px}
+@media (min-width:980px){.stage3d{height:auto;padding:12px 0}}
+.stack3d{position:relative;inset:auto;display:flex;flex-direction:column;align-items:center;gap:20px;transform:rotateX(calc(12deg + var(--ty,0deg))) rotateY(calc(-12deg + var(--tx,0deg))) rotateZ(1deg)}
+@media (min-width:980px){.stack3d{gap:24px;transform:rotateX(calc(14deg + var(--ty,0deg))) rotateY(calc(-20deg + var(--tx,0deg))) rotateZ(1.5deg)}}
+.c3{position:relative;left:auto;width:min(300px,84%)}
+.c3-1,.c3-2,.c3-3,.c3-4{top:auto}
+.c3-1{--x:-7%;--z:0px}.c3-2{--x:7%;--z:12px}.c3-3{--x:-7%;--z:24px}.c3-4{--x:7%;--z:36px}
+@media (min-width:980px){.c3{width:min(320px,84%)}.c3-1{--x:-9%;--z:0px}.c3-2{--x:9%;--z:30px}.c3-3{--x:-9%;--z:60px}.c3-4{--x:9%;--z:90px}}
+/* demo: names and subtitles wrap instead of being cut off with "…"; five-tab bars fit on 320px phones */
+.app-bar .who span{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.35}
+.item .t{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:break-word;line-height:1.35}
+.item .s{overflow-wrap:anywhere}
+.tabbar button{min-width:0}
+@media (max-width:360px){.tabbar button{font-size:10px;padding-inline:1px;letter-spacing:-.01em}.kpi b{overflow-wrap:break-word}}
+/* visit list: the Check in / Check out button drops below the name when the row is narrow */
+.tl .body > .row{flex-wrap:wrap;row-gap:8px}
+.tl .body > .row > .grow{flex:1 1 104px}
+/* AI match facts: two per row so "Business Loan" and "750–799" never spill out */
+.kpis-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.kpis-2 > .kpi:nth-child(3):last-child{grid-column:1 / -1}
+/* phones: hero cards stay inside the page margin */
+@media (max-width:979px){.c3{width:min(300px,80%)}.c3-1{--x:-6%;--z:0px}.c3-2{--x:6%;--z:10px}.c3-3{--x:-6%;--z:20px}.c3-4{--x:6%;--z:30px}}
+/* timeline: durations sit in the row text, never inside a short bar */
+.g-bar{padding:0}
+.g-label .g-dur{display:block;margin-top:3px;font-size:12.5px;font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums}
+.g-label .g-dur.par{color:var(--good)}
+/* mixed look: light page with deliberate dark bands (plus the navy hero); the theme switch turns everything dark */
+.band{--bg:#0A1628;--surface:#101F38;--surface-2:#172A47;--ink:#E8EEF9;--ink-2:#A2B2CC;--ink-3:#7F92B0;--line:#22375A;
+  --accent:#4F86F7;--accent-strong:#6B9AFA;--accent-soft:#18305E;--on-accent:#FFFFFF;
+  --good:#3CC48B;--good-soft:#103327;--warn:#F1A849;--warn-soft:#3A2810;--bad:#F27777;--bad-soft:#3D1A20;
+  --gold:#F2C064;--gold-soft:#3A2C10;--scrim:rgba(0,0,0,.6);--shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+  background:radial-gradient(760px 340px at 100% 0%,rgba(37,99,235,.24),transparent 62%),radial-gradient(520px 260px at 0% 100%,rgba(245,196,107,.08),transparent 60%),var(--bg);color:var(--ink);color-scheme:dark}
+section.block.band,section.block.band + section.block,footer.band{border-top-color:transparent}
+:root[data-theme="dark"] .band{--bg:#060F1E;--surface:#0E1D36}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .band{--bg:#060F1E;--surface:#0E1D36}}
+/* theme switch: header (400px and up), menu panel, footer */
+.theme-btn{display:none;place-items:center;width:40px;height:40px;flex:none;padding:0;border-radius:10px;border:1px solid var(--hero-line);background:transparent;color:var(--hero-ink);-webkit-appearance:none;appearance:none}
+.theme-btn svg,.menu-theme svg{width:19px;height:19px}
+@media (min-width:400px){.theme-btn{display:inline-grid;margin-left:auto}.top .cta-top{margin-left:0}}
+@media (min-width:1040px){.theme-btn{margin-left:4px}.top .cta-top{margin-left:4px}}
+.menu-theme{display:flex;align-items:center;gap:10px;width:100%;text-align:left;font:500 15.5px var(--f-body);color:var(--hero-ink);background:transparent;border:0;border-top:1px solid var(--hero-line);border-radius:0;margin-top:4px;padding:14px 12px 10px;-webkit-appearance:none;appearance:none}
+.theme-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px;color:var(--ink-2)}
+.theme-row button{font:600 13px var(--f-body);padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink-2);-webkit-appearance:none;appearance:none}
+.theme-row button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
 </style>
 </head>
 <body>
+<script>(function(){var d=document.documentElement,t=null;try{t=localStorage.getItem('flocred-theme')}catch(e){}if(t==='dark'||t==='light'){d.setAttribute('data-theme',t)}else if(!d.hasAttribute('data-theme')){d.setAttribute('data-theme','light')}})();</script>
 
 <header class="top">
   <div class="wrap">
@@ -512,11 +560,13 @@ summary::-webkit-details-marker{display:none}
     <nav class="nav" aria-label="Sections">
       <a href="#journey">How it works</a><a href="#demo">Demo</a><a href="#paperwork">AI paperwork</a><a href="#ads">Ads &amp; leads</a><a href="#benefits">Benefits</a><a href="#modules">Modules</a><a href="#timeline">Timeline</a>
     </nav>
+    <button class="theme-btn" type="button" data-theme-toggle aria-label="Switch to dark theme"><span class="ti" aria-hidden="true"></span></button>
     <a class="cta-top" href="#contact">Talk to us</a>
     <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel" aria-label="Open menu"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
   </div>
   <nav class="menu-panel" id="menuPanel" aria-label="Sections menu" hidden>
     <a href="#journey">How it works</a><a href="#demo">Try the demo</a><a href="#paperwork">AI paperwork</a><a href="#ads">Ads &amp; leads</a><a href="#benefits">Benefits</a><a href="#modules">Modules</a><a href="#timeline">Timeline</a><a href="#deliverables">Deliverables</a><a href="#contact">Contact Alfa Team</a>
+    <button class="menu-theme" type="button" data-theme-toggle><span class="ti" aria-hidden="true"></span><span class="tt">Switch to dark theme</span></button>
   </nav>
 </header>
 
@@ -585,7 +635,7 @@ summary::-webkit-details-marker{display:none}
   </div>
 </section>
 
-<section class="block" id="paperwork">
+<section class="block band" id="paperwork">
   <div class="wrap">
     <div class="sec-head">
       <span class="eyebrow">AI paperwork</span>
@@ -639,7 +689,7 @@ summary::-webkit-details-marker{display:none}
   </div>
 </section>
 
-<section class="block" id="benefits">
+<section class="block band" id="benefits">
   <div class="wrap">
     <div class="sec-head">
       <span class="eyebrow">Efficiency</span>
@@ -760,8 +810,10 @@ summary::-webkit-details-marker{display:none}
   </div>
 </section>
 
-<footer>
-  <div class="wrap">Prepared by Alfa Team Management · +91 95683 06670 · for FLOCRED Private Limited. Based on the FLOCRED v2 Scope of Work, Draft 1.0 (18 September 2026). Names, numbers and lenders in the demo are sample data. Final timelines, resourcing and commercials will be confirmed after requirements sign-off.</div>
+<footer class="band">
+  <div class="wrap">Prepared by Alfa Team Management · +91 95683 06670 · for FLOCRED Private Limited. Based on the FLOCRED v2 Scope of Work, Draft 1.0 (18 September 2026). Names, numbers and lenders in the demo are sample data. Final timelines, resourcing and commercials will be confirmed after requirements sign-off.
+    <div class="theme-row" role="group" aria-label="Page theme"><span>Page theme:</span><button type="button" data-set-theme="light" aria-pressed="true">Light</button><button type="button" data-set-theme="dark" aria-pressed="false">Dark</button></div>
+  </div>
 </footer>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -1074,7 +1126,7 @@ ops:{
     const L=MATCH_LEADS[S.ops.matchLead], M=matchLenders(L), ref=S.ops.referred[S.ops.matchLead];
     return `<div class="chips">${MATCH_LEADS.map((l,i)=>`<button class="chip" data-act="mlead" data-i="${i}" aria-pressed="${i===S.ops.matchLead}">${l.name}</button>`).join('')}</div>
     <div class="card"><div class="muted">Ready for lender referral</div><div style="font-weight:600;font-size:17px;margin-top:2px">${L.name}</div>
-      <div class="kpis" style="margin-top:10px"><div class="kpi"><b style="font-size:15px">${L.product}</b><span>Product</span></div><div class="kpi"><b class="num" style="font-size:15px">${lakh(L.amt)}</b><span>Amount</span></div><div class="kpi"><b class="num" style="font-size:15px">${L.band}</b><span>CIBIL band</span></div></div>
+      <div class="kpis kpis-2" style="margin-top:10px"><div class="kpi"><b style="font-size:15px">${L.product}</b><span>Product</span></div><div class="kpi"><b class="num" style="font-size:15px">${lakh(L.amt)}</b><span>Amount</span></div><div class="kpi"><b class="num" style="font-size:15px">${L.band}</b><span>CIBIL band</span></div></div>
       <div class="muted" style="margin-top:8px">${L.area} · ${L.vintage}</div></div>
     <div class="card"><div class="card-h"><h4>${ic('spark')} ARIA lender ranking</h4><span class="muted">${M.ok.length} eligible</span></div><div class="list">
       ${M.ok.map((x,i)=>`<div class="item" style="align-items:flex-start"><div class="grow"><div class="t">${i===0?'<span class="pill gold" style="margin-right:6px">Best match</span>':''}${x.n}</div><div class="reasons">${x.reasons.map(r=>`<span class="pill">${r}</span>`).join('')}</div><div class="bar" style="margin-top:8px"><i style="width:${x.score}%"></i></div></div><div class="score num">${x.score}</div></div>`).join('')}
@@ -1329,7 +1381,7 @@ const PHASES = [
 const SPAN=30, pct=w=>w/SPAN*100;
 $('#gantt').innerHTML = `<div class="g-key"><span><i style="background:var(--accent)"></i>Main track</span><span><i style="background:var(--good)"></i>Runs in parallel</span><span><i style="background:var(--accent);opacity:.35"></i>Longer estimate</span></div>
   <div class="g-axis"><span></span><div class="ticks num">${[0,5,10,15,20,25,30].map(w=>`<span style="left:${pct(w)}%">${w===0?'Week 0':'Wk '+w}</span>`).join('')}</div></div>
-  ${PHASES.map(p=>`<div class="g-row"><div class="g-label"><b>Phase ${p[0]} · ${p[1]}</b><span>${p[2]}</span></div><div class="g-track" role="img" aria-label="Phase ${p[0]}: ${p[4]} to ${p[5]} weeks"><span class="g-ext ${p[6]?'par':''}" style="left:${pct(p[3]+p[4])}%;width:${pct(p[5]-p[4])}%"></span><span class="g-bar ${p[6]?'par':''}" style="left:${pct(p[3])}%;width:${pct(p[4])}%">${p[4]}–${p[5]} wk</span></div></div>`).join('')}`;
+  ${PHASES.map(p=>`<div class="g-row"><div class="g-label"><b>Phase ${p[0]} · ${p[1]}</b><span>${p[2]}</span><span class="g-dur ${p[6]?'par':''}">${p[4]}–${p[5]} weeks · from week ${p[3]+1}</span></div><div class="g-track" role="img" aria-label="Phase ${p[0]}: ${p[4]} to ${p[5]} weeks"><span class="g-ext ${p[6]?'par':''}" style="left:${pct(p[3]+p[4])}%;width:${pct(p[5]-p[4])}%"></span><span class="g-bar ${p[6]?'par':''}" style="left:${pct(p[3])}%;width:${pct(p[4])}%"></span></div></div>`).join('')}`;
 
 const DELIV = ['v2 public website: responsive, SEO-structured, with ARIA','Backend platform (API + database) for web and mobile','DSA / lead CRM (web) with role-based access','Connector/DSA portal plus connector management and payouts','DSA wallet: free access, prepaid balance, per-use billing, ledger','Campaign management with multi-channel dispatch and attribution','HRMS: onboarding, attendance and leave, documents, performance','Field sales tracking: calls, activity, screen time, visit planning','DSR visit verification: geo-pinned, photo-verified, auto-purge','AI & automation: lead scraper, blog generator, rate manager, lender matching','Lead allotment engine with employee workload view','Android app for field sales and team leads','iOS app for field sales and team leads','Dashboards for Admin/Ops, team leads and team monitoring','Deployment runbook, environment setup and technical documentation'];
 $('#dlist').innerHTML = DELIV.map((d,i)=>`<li><b class="num">${i+1}</b><span>${d}</span></li>`).join('');
@@ -1850,6 +1902,16 @@ menuBtn.addEventListener('click', e=>{ e.stopPropagation(); setMenu(menuPanel.hi
 menuPanel.addEventListener('click', e=>{ if(e.target.closest('a')) setMenu(false); });
 document.addEventListener('click', e=>{ if(!menuPanel.hidden && !e.target.closest('#menuPanel')) setMenu(false); });
 document.addEventListener('keydown', e=>{ if(e.key==='Escape') setMenu(false); });
+/* page theme: mixed light look by default, all-dark on request, remembered on this device */
+const SUN='<svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M4.7 4.7l1.6 1.6M17.7 17.7l1.6 1.6M2.6 12h2.2M19.2 12h2.2M4.7 19.3l1.6-1.6M17.7 6.3l1.6-1.6"/></svg>';
+const MOON='<svg class="i" viewBox="0 0 24 24"><path d="M20.2 14.6A8.3 8.3 0 0 1 9.4 3.8a8.3 8.3 0 1 0 10.8 10.8z"/></svg>';
+const curTheme=()=>document.documentElement.getAttribute('data-theme')==='dark'?'dark':'light';
+function paintTheme(){ const t=curTheme(), next=t==='dark'?'light':'dark';
+  document.querySelectorAll('[data-theme-toggle]').forEach(b=>{ b.setAttribute('aria-label','Switch to '+next+' theme'); const i=b.querySelector('.ti'); if(i) i.innerHTML=(t==='dark'?SUN:MOON); const x=b.querySelector('.tt'); if(x) x.textContent='Switch to '+next+' theme'; });
+  document.querySelectorAll('[data-set-theme]').forEach(b=>b.setAttribute('aria-pressed', String(b.dataset.setTheme===t))); }
+function setTheme(t){ document.documentElement.setAttribute('data-theme',t); try{ localStorage.setItem('flocred-theme',t); }catch(e){} paintTheme(); toast(t==='dark'?'Dark theme on':'Light theme on'); }
+document.addEventListener('click', e=>{ const a=e.target.closest('[data-theme-toggle]'); if(a){ setTheme(curTheme()==='dark'?'light':'dark'); return; } const s=e.target.closest('[data-set-theme]'); if(s) setTheme(s.dataset.setTheme); });
+paintTheme();
 render();
 })();
 </script>
