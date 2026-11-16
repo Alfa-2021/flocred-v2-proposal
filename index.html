@@ -458,6 +458,50 @@ summary::-webkit-details-marker{display:none}
 .list > .item{grid-template-columns:minmax(0,1fr)}
 .item .s{white-space:normal;overflow:visible;text-overflow:clip}
 @media (max-width:360px){.kpi{padding:9px 9px}.kpi b{font-size:13.5px!important;overflow-wrap:anywhere}.app-bar .tag{font-size:9.5px;padding:2px 6px}.screen{padding-inline:10px}}
+
+/* ===== v2.3: color psychology, 3D motion, owner reports ===== */
+/* navy/blue = trust and security (FLOCRED brand) · green = money, growth, approval · gold = premium, prosperity · amber/red = attention only */
+:root{--gold:#9A6512;--gold-soft:#FBEFD6;--hero-gold:#F5C46B;--gain:#0F7B57;--on-gain:#FFFFFF}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--gold:#F2C064;--gold-soft:#3A2C10}}
+:root[data-theme="dark"]{--gold:#F2C064;--gold-soft:#3A2C10}
+.hero{position:relative;overflow:hidden;background:radial-gradient(900px 420px at 88% -8%,rgba(37,99,235,.38),transparent 62%),radial-gradient(640px 320px at -8% 112%,rgba(245,196,107,.12),transparent 60%),var(--hero)}
+.hero h1 em{color:var(--hero-gold)}
+.top .cta-top{background:var(--hero-gold);color:var(--hero)}
+.top .cta-top:hover{background:#FFD58A}
+.big-stat{background:var(--gain);color:var(--on-gain)}
+.pill.gold{background:var(--gold-soft);color:var(--gold)}
+.alert-item.info{background:var(--accent-soft);color:var(--accent)}
+/* hero layout with a 3D activity stack */
+.hero-grid{display:grid;gap:22px}
+.hero-copy{display:grid;gap:20px;min-width:0}
+@media (min-width:980px){.hero-grid{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);align-items:center;gap:40px}}
+.stage3d{perspective:1100px;height:300px;position:relative;min-width:0}
+@media (min-width:980px){.stage3d{height:430px}}
+.stack3d{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(calc(14deg + var(--ty,0deg))) rotateY(calc(-16deg + var(--tx,0deg))) rotateZ(2deg);transition:transform .3s ease-out;animation:float3d 7s ease-in-out infinite}
+@media (min-width:980px){.stack3d{transform:rotateX(calc(16deg + var(--ty,0deg))) rotateY(calc(-24deg + var(--tx,0deg))) rotateZ(3deg)}}
+@keyframes float3d{0%,100%{translate:0 0}50%{translate:0 -10px}}
+.c3{position:absolute;left:50%;width:min(270px,70%);padding:12px 15px;border-radius:16px;background:linear-gradient(160deg,rgba(255,255,255,.15),rgba(255,255,255,.05));border:1px solid rgba(255,255,255,.18);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:var(--hero-ink);box-shadow:0 18px 40px rgba(0,0,0,.35);display:grid;gap:2px;transform:translateX(var(--x)) translateZ(var(--z))}
+.c3-k{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--hero-ink-2)}
+.c3 b{font-family:var(--f-display);font-size:17px;font-weight:600}
+.c3-s{font-size:12.5px;color:var(--hero-ink-2)}
+.c3 .gold{color:var(--hero-gold)} .c3 .green{color:#5EE0A6}
+.c3-1{top:2%;--x:-60%;--z:0px} .c3-2{top:26%;--x:-40%;--z:25px} .c3-3{top:50%;--x:-60%;--z:50px} .c3-4{top:74%;--x:-40%;--z:75px}
+@media (min-width:980px){.c3-1{--z:10px}.c3-2{--z:60px}.c3-3{--z:110px}.c3-4{--z:160px}.c3 b{font-size:19px}}
+/* subtle 3D entrance and hover */
+@keyframes rise3d{from{transform:translateY(14px) rotateX(14deg)}to{transform:none}}
+.outcome{animation:rise3d .7s cubic-bezier(.2,.7,.2,1) both;transform-origin:50% 100%}
+.outcome:nth-child(2){animation-delay:.08s}.outcome:nth-child(3){animation-delay:.16s}.outcome:nth-child(4){animation-delay:.24s}
+@media (hover:hover) and (pointer:fine){.j-step,.pw,.ba{transition:transform .25s ease,box-shadow .25s ease}.j-step:hover,.pw:hover,.ba:hover{transform:perspective(800px) translateY(-4px) rotateX(2deg);box-shadow:var(--shadow)}}
+/* six roles: 3 x 2 on phones */
+.roles{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (min-width:560px){.roles{grid-template-columns:repeat(6,minmax(0,1fr))}}
+/* owner reports */
+.chart{display:block;width:100%;height:auto}
+.wa-msg{background:var(--good-soft);color:var(--ink);border-radius:12px 12px 12px 4px;padding:11px 13px;font-size:14px;line-height:1.5;margin-bottom:10px}
+.owner-hero{border-color:var(--gold-soft)}
+.kpi b{font-size:clamp(16px,4.6vw,20px)}
+.kpi b.num{white-space:nowrap}
+@media (max-width:360px){.kpi b{font-size:13.5px!important}}
 </style>
 </head>
 <body>
@@ -477,7 +521,8 @@ summary::-webkit-details-marker{display:none}
 </header>
 
 <section class="hero" id="top">
-  <div class="wrap">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
     <span class="eyebrow">Proposal for FLOCRED Pvt Ltd · v2 platform</span>
     <h1>Run FLOCRED’s whole loan business <em>from one app.</em></h1>
     <p class="lede">Leads get assigned on their own, every field visit comes with proof, AI does the paperwork and ranks the best lenders, and DSAs serve themselves. You see all of it live, on your phone.</p>
@@ -493,6 +538,15 @@ summary::-webkit-details-marker{display:none}
       <a class="btn btn-wa" href="https://wa.me/919568306670?text=Hi%20Alfa%20Team%2C%20we%20saw%20the%20FLOCRED%20v2%20proposal%20and%20want%20to%20discuss%20it." target="_blank" rel="noopener">WhatsApp us</a>
     </div>
     <div class="byline"><span class="alfa-mark">A</span><span>Prepared by <b>Alfa Team Management</b><br><span class="num">+91 95683 06670</span></span></div>
+    </div>
+    <div class="stage3d" aria-hidden="true">
+      <div class="stack3d" id="stack3d">
+        <div class="c3 c3-1"><span class="c3-k">New lead · Meta ad</span><b>Ritika Sharma · ₹4 L</b><span class="c3-s">Assigned to Imran in 3 sec</span></div>
+        <div class="c3 c3-2"><span class="c3-k">Visit verified</span><b>Sharma Electronics</b><span class="c3-s">GPS and photo proof · Dwarka</span></div>
+        <div class="c3 c3-3"><span class="c3-k">ARIA lender match</span><b class="gold">93 / 100</b><span class="c3-s">Fintech NBFC · E</span></div>
+        <div class="c3 c3-4"><span class="c3-k">Disbursed · last 30 days</span><b class="green">₹5.45 Cr</b><span class="c3-s">78% of the monthly target</span></div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -501,7 +555,7 @@ summary::-webkit-details-marker{display:none}
     <div class="sec-head">
       <span class="eyebrow">How it works</span>
       <h2>One loan, from first click to commission</h2>
-      <p>Eight steps across five people, all in one system. Tap a step to open that exact screen in the working demo, or let the guided tour walk you through it.</p>
+      <p>Eight steps across six people, all in one system. Tap a step to open that exact screen in the working demo, or let the guided tour walk you through it.</p>
     </div>
     <div class="journey" id="journeyList"></div>
     <div class="tour-cta"><button class="btn btn-primary" data-tour="start">Start the guided tour</button><span class="muted">About 2 minutes. Every screen works on your phone.</span></div>
@@ -1023,7 +1077,7 @@ ops:{
       <div class="kpis" style="margin-top:10px"><div class="kpi"><b style="font-size:15px">${L.product}</b><span>Product</span></div><div class="kpi"><b class="num" style="font-size:15px">${lakh(L.amt)}</b><span>Amount</span></div><div class="kpi"><b class="num" style="font-size:15px">${L.band}</b><span>CIBIL band</span></div></div>
       <div class="muted" style="margin-top:8px">${L.area} · ${L.vintage}</div></div>
     <div class="card"><div class="card-h"><h4>${ic('spark')} ARIA lender ranking</h4><span class="muted">${M.ok.length} eligible</span></div><div class="list">
-      ${M.ok.map((x,i)=>`<div class="item" style="align-items:flex-start"><div class="grow"><div class="t">${i===0?'<span class="pill info" style="margin-right:6px">Best match</span>':''}${x.n}</div><div class="reasons">${x.reasons.map(r=>`<span class="pill">${r}</span>`).join('')}</div><div class="bar" style="margin-top:8px"><i style="width:${x.score}%"></i></div></div><div class="score num">${x.score}</div></div>`).join('')}
+      ${M.ok.map((x,i)=>`<div class="item" style="align-items:flex-start"><div class="grow"><div class="t">${i===0?'<span class="pill gold" style="margin-right:6px">Best match</span>':''}${x.n}</div><div class="reasons">${x.reasons.map(r=>`<span class="pill">${r}</span>`).join('')}</div><div class="bar" style="margin-top:8px"><i style="width:${x.score}%"></i></div></div><div class="score num">${x.score}</div></div>`).join('')}
     </div>
     ${M.ok.length?(ref?`<div class="notice info" style="margin-top:10px">${ic('check')}<span>Referred to ${ref}. Ops approval logged at ${clock(new Date())}.</span></div>`:`<button class="btn btn-primary" style="width:100%;margin-top:12px" data-act="refer" data-n="${M.ok[0].n}">Approve & refer to ${M.ok[0].n}</button>`):''}</div>
     ${M.out.length?`<div class="card"><div class="card-h"><h4>Not eligible</h4><span class="muted">${M.out.length} lenders</span></div><div class="list">${M.out.map(x=>`<div class="item"><div class="grow"><div class="t" style="font-weight:500">${x.n}</div></div><span class="pill bad">${x.why}</span></div>`).join('')}</div></div>`:''}
@@ -1286,6 +1340,7 @@ $('#stack').innerHTML = STACK.map(r=>`<tr><th>${r[0]}</th><td>${r[1]}</td></tr>`
 function freshAll(){
   const s = freshState();
   s.screen.tl = 'team'; s.screen.cust = 'emi';
+  s.role = 'owner'; s.screen.owner = 'overview'; s.owner = {reminded:false};
   s.field.offline = false;
   s.field.docs = {stage:'idle', items:[
     {k:'pan',name:'PAN card',file:'pan_card.jpg'},
@@ -1350,7 +1405,7 @@ Object.assign(IC,{
   alert:'<path d="M12 3.5l9 16H3z"/><path d="M12 10v4.5M12 17.5h.01"/>',
   arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>'
 });
-const ROLE_ORDER = [['field','Field','pin'],['tl','Team lead','users'],['ops','Ops','grid'],['dsa','DSA','wallet'],['cust','Customer','globe']];
+const ROLE_ORDER = [['owner','Owner','chart'],['field','Field','pin'],['tl','Team lead','users'],['ops','Ops','grid'],['dsa','DSA','wallet'],['cust','Customer','globe']];
 ROLES.tl = {
   bar:{init:'AK',name:'Anil Kumar',sub:'Team Lead · Delhi West · 6 executives'},
   tabs:[['team','Live team','users'],['approvals','Approvals','checkc'],['board','Targets','trophy']],
@@ -1384,7 +1439,8 @@ const TOUR = [
   ['ops','dsr','Ops verifies the visit in one tap. Open a pending visit and tap Mark verified.'],
   ['ops','match','ARIA ranks the lenders for the file. Tap Approve & refer.'],
   ['tl','team','The team lead sees everyone live. Tap Nudge on an alert.'],
-  ['dsa','wallet','DSAs unlock leads from a prepaid wallet. Tap Unlock on a lead.']
+  ['dsa','wallet','DSAs unlock leads from a prepaid wallet. Tap Unlock on a lead.'],
+  ['owner','overview','And the owner sees everything live: disbursals, revenue and teams, plus a WhatsApp summary every evening.']
 ];
 let tour = -1;
 function renderHint(E){
@@ -1664,6 +1720,63 @@ EXTRA['ads-lead'] = function(){
   toast(O.aiCall ? 'ARIA Voice called '+name.split(' ')[0]+' and booked a visit with '+c.name.split(' ')[0] : 'New '+src.split(' · ')[0]+' lead: '+name+' → '+c.name.split(' ')[0]);
 };
 EXTRA['ai-call'] = function(){ const O=S.ops; O.aiCall=!O.aiCall; toast(O.aiCall?'AI calling on. Now simulate a new ad lead.':'AI calling off'); };
+
+/* Owner: overall business reports */
+Object.assign(IC,{chart:'<path d="M4 20h16"/><rect x="5.5" y="11" width="3" height="7" rx="1"/><rect x="10.5" y="7" width="3" height="11" rx="1"/><rect x="15.5" y="4" width="3" height="14" rx="1"/>'});
+ROLES.owner = {
+  bar:{init:'FL',name:'Owner’s view',sub:'Director · all zones · live'},
+  tabs:[['overview','Overview','chart'],['revenue','Revenue','cash'],['teams','Teams','users']],
+  explain:{
+    overview:['Owner: the whole business at a glance','Disbursals against target, commission earned, conversion and the pipeline, with problems flagged before they grow. A short summary also arrives on WhatsApp every evening.',['Tap Remind on the stuck files alert','Tap Send me today’s summary'],'SOW §3.3 reporting · §3.10 MIS · deliverable 14 dashboards'],
+    revenue:['Owner: revenue and collections','Commission by lender, what lenders still owe, DSA payouts and the return on ad spend, so cash flow is never a surprise.',['Compare commission by lender','Check what lenders still owe'],'SOW §3.10 Lender Statistics · Revenue Reconciliation · Payout reports'],
+    teams:['Owner: teams and partners','Zone performance, top executives and top DSAs, with field productivity and attendance straight from the app.',['Spot the zone that needs attention'],'SOW §3.6 performance · §3.7 field tracking · §3.10 reports']
+  }
+};
+SCREENS.owner = {
+  overview(){
+    const O=S.owner, months=[['May',2.9],['Jun',3.4],['Jul',3.8],['Aug',4.2],['Sep',4.7],['Oct',5.2]];
+    const bars=months.map(([m,v],i)=>{ const h=Math.round(v/6*96), x=10+i*51, last=i===months.length-1; return `<rect x="${x}" y="${112-h}" width="34" height="${h}" rx="5" fill="${last?'var(--gain)':'var(--accent-soft)'}"/><text x="${x+17}" y="${106-h}" text-anchor="middle" font-size="11" font-weight="700" fill="${last?'var(--good)':'var(--ink-2)'}">${v}</text><text x="${x+17}" y="128" text-anchor="middle" font-size="11" fill="var(--ink-3)">${m}</text>`; }).join('');
+    return `<div class="card owner-hero"><div class="muted">Disbursed · last 30 days</div><div class="big-money num" style="color:var(--good)">₹5.45 Cr</div>
+      <div class="bar good" style="margin-top:8px"><i style="width:78%"></i></div><div class="muted" style="margin-top:6px">78% of the ₹7 Cr monthly target · 58 files</div></div>
+    <div class="kpis"><div class="kpi"><b class="num" style="color:var(--good)">₹10.9 L</b><span>Commission earned</span></div><div class="kpi"><b class="num">14.1%</b><span>Lead → disbursal</span></div><div class="kpi"><b class="num">₹16.8 Cr</b><span>In pipeline</span></div></div>
+    <div class="card"><div class="card-h"><h4>Monthly disbursals</h4><span class="muted">₹ crore</span></div><svg class="chart" viewBox="0 0 320 134" role="img" aria-label="Monthly disbursals from May to October, rising from 2.9 to 5.2 crore">${bars}</svg></div>
+    <div class="card"><div class="card-h"><h4>Needs your attention</h4></div><div style="display:grid;gap:8px">
+      <div class="alert-item warn">${ic('alert')}<div class="grow"><b>7 files stuck over 7 days at documents</b>${O.reminded?'Team leads reminded.':'Mostly in Noida.'}</div>${O.reminded?'<span class="pill good">Done</span>':'<button class="btn btn-plain btn-sm" data-act="owner-remind">Remind</button>'}</div>
+      <div class="alert-item warn">${ic('alert')}<div class="grow"><b>Noida conversion down 12%</b>Compared with last month</div></div>
+      <div class="alert-item info">${ic('cash')}<div class="grow"><b>DSA payouts of ₹3.2 L due this week</b>12 payout requests waiting</div></div>
+    </div></div>
+    <div class="card"><div class="card-h"><h4>Daily summary on WhatsApp</h4><span class="muted">Every day, 8 PM</span></div>
+      <div class="wa-msg">Today: 46 new leads (18 from Meta ads), 9 files sent to lenders, 3 disbursals worth ₹38 L. Best performer: Nisha Rawat. Watch: 7 files waiting for documents in Noida.</div>
+      <button class="btn btn-soft btn-sm" data-act="owner-summary">${ic('send')}Send me today’s summary</button></div>`;
+  },
+  revenue(){
+    const L=[['Fintech NBFC · E',3.1],['Private Bank · A',2.6],['NBFC · C',2.2],['Private Bank · B',1.6],['Housing Finance · G',1.4]];
+    return `<div class="kpis"><div class="kpi"><b class="num" style="color:var(--good)">₹10.9 L</b><span>Commission earned</span></div><div class="kpi"><b class="num">₹2.4 L</b><span>DSA payouts</span></div><div class="kpi"><b class="num" style="color:var(--good)">₹8.5 L</b><span>Net revenue</span></div></div>
+    <div class="card"><div class="card-h"><h4>Commission by lender</h4><span class="muted">Last 30 days</span></div>
+      ${L.map(([n,v])=>`<div style="display:grid;gap:4px;margin-bottom:10px"><div class="row"><span class="grow" style="font-size:13.5px;font-weight:600">${n}</span><span class="num sub">₹${v} L</span></div><div class="bar good"><i style="width:${(v/3.1*100).toFixed(1)}%"></i></div></div>`).join('')}</div>
+    <div class="card"><div class="card-h"><h4>Money to collect</h4><span class="muted">Reconciliation</span></div>
+      <dl class="kv"><dt>Commission invoices raised</dt><dd>₹10.9 L</dd><dt>Received from lenders</dt><dd>₹6.8 L</dd><dt>Still pending</dt><dd style="color:var(--warn)">₹4.1 L</dd><dt>Oldest pending invoice</dt><dd>38 days</dd></dl></div>
+    <div class="card"><div class="card-h"><h4>Return on ads</h4><span class="muted">Google + Meta</span></div>
+      <dl class="kv"><dt>Ad spend</dt><dd>₹1.10 L</dd><dt>Disbursals from ads</dt><dd>20 files</dd><dt>Cost per disbursal</dt><dd>₹5,500</dd><dt>Commission from ad loans</dt><dd style="color:var(--good)">₹3.6 L</dd><dt>Return on ad spend</dt><dd style="color:var(--good)">3.3×</dd></dl></div>`;
+  },
+  teams(){
+    const Z=[['Delhi West',1.9,21,16],['Gurgaon',1.5,16,15],['Noida',1.2,13,11],['Jaipur',0.85,8,12]], D=[['Mehta Finserv',62,5],['Sharma Associates',48,4],['Gupta Loan Point',35,3]];
+    return `<div class="card"><div class="card-h"><h4>Zones</h4><span class="muted">Disbursed · last 30 days</span></div><div class="list">
+      ${Z.map(([z,v,f,c])=>`<div class="item" style="display:grid;gap:6px"><div class="row"><div class="grow"><div class="t">${z}</div><div class="s">${f} files · ${c}% lead → disbursal</div></div><b class="num">₹${v} Cr</b></div><div class="bar ${c<12?'warn':'good'}"><i style="width:${(v/1.9*100).toFixed(1)}%"></i></div></div>`).join('')}</div></div>
+    <div class="kpis"><div class="kpi"><b class="num">4.6</b><span>Visits per executive a day</span></div><div class="kpi"><b class="num">21</b><span>Calls per executive a day</span></div><div class="kpi"><b class="num">94%</b><span>Attendance</span></div></div>
+    <div class="card"><div class="card-h"><h4>Top field executives</h4><span class="muted">Disbursals this month</span></div><div class="list">
+      ${[['Nisha Rawat',6],['Pooja Singh',5],['Simran Kaur',5]].map(([n,v],i)=>`<div class="item"><span class="rank num">${i+1}</span><div class="grow"><div class="t">${n}</div></div><b class="num">${v}</b></div>`).join('')}</div></div>
+    <div class="card"><div class="card-h"><h4>Top DSAs</h4><span class="muted">Disbursed through DSAs</span></div><div class="list">
+      ${D.map(([n,v,f],i)=>`<div class="item"><span class="rank num">${i+1}</span><div class="grow"><div class="t">${n}</div><div class="s">${f} files</div></div><b class="num">₹${v} L</b></div>`).join('')}</div></div>`;
+  }
+};
+EXTRA['owner-remind'] = function(){ S.owner.reminded=true; toast('Reminder sent to the Noida and Delhi West team leads'); };
+EXTRA['owner-summary'] = function(){ toast('Today’s summary sent to your WhatsApp (demo)'); return false; };
+/* 3D tilt of the hero cards on laptops; phones get the gentle float only */
+(function(){ const st=$('#stack3d'), hero=$('.hero'); if(!st||!hero||!matchMedia('(pointer:fine)').matches||matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  hero.addEventListener('pointermove', e=>{ const r=hero.getBoundingClientRect(), x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5; st.style.setProperty('--tx',(x*12).toFixed(2)+'deg'); st.style.setProperty('--ty',(-y*9).toFixed(2)+'deg'); });
+  hero.addEventListener('pointerleave', ()=>{ st.style.setProperty('--tx','0deg'); st.style.setProperty('--ty','0deg'); });
+})();
 $('#screen').addEventListener('input', e=>{
   const t=e.target; if(!/^emi/.test(t.id)) return; const C=S.cust;
   if(t.id==='emiAmt') C.amt=+t.value; else if(t.id==='emiRate') C.rate=+t.value; else if(t.id==='emiYrs') C.years=+t.value;
@@ -1695,7 +1808,7 @@ const JOURNEY = [
   ['pin','Ops','Visit verified','Geo-tagged proof checked in one tap. Photos auto-delete after 48 hours.','ops','dsr'],
   ['spark','ARIA','Best lenders ranked','Eligible lenders ranked by match score for Ops to approve.','ops','match'],
   ['users','Team lead','Team kept on track','Live status, alerts for missed visits, approvals in a tap.','tl','team'],
-  ['funnel','Management','Results visible live','Funnel, turnaround time and lost reasons by zone and product.','ops','pipeline'],
+  ['chart','Owner','Results visible live','Disbursals, revenue and teams on one screen, plus a daily WhatsApp summary.','owner','overview'],
   ['wallet','DSA','Commission paid','Connectors track referrals and request payouts themselves.','dsa','payouts']
 ];
 $('#journeyList').innerHTML = JOURNEY.map(j=>`<div class="j-step"><div class="j-ic">${ic(j[0])}</div><div class="j-body"><span class="who">${j[1]}</span><b>${j[2]}</b><p>${j[3]}</p><button class="btn btn-ghost btn-sm j-go" data-jump="${j[4]}:${j[5]}">See this screen ${ic('arrow')}</button></div></div>`).join('');
