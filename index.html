@@ -1,0 +1,1510 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="FLOCRED v2 platform proposal with a working demo: leads, lenders, field teams, DSAs and HR in one app. Prepared by Alfa Team Management.">
+<meta property="og:title" content="FLOCRED v2 · Proposal by Alfa Team Management">
+<meta property="og:description" content="One app for leads, lenders, field teams and DSAs. Tap through the working demo on your phone.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0A1628">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>FLOCRED v2 Proposal</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap">
+<style>
+/* Layout: navy brand hero, then a working app demo (phone-width card, sticky tab bar), then scope sections as a single readable column. Brand tokens from the SOW: Sora / DM Sans, navy #0A1628, blue #2563EB. */
+:root{
+  --bg:#F3F6FB; --surface:#FFFFFF; --surface-2:#EBF0F8; --ink:#0A1628; --ink-2:#4B5A74; --ink-3:#77849B; --line:#D9E1EE;
+  --accent:#2563EB; --accent-strong:#1D4ED8; --accent-soft:#E2EBFF; --on-accent:#FFFFFF;
+  --hero:#0A1628; --hero-ink:#F2F6FF; --hero-ink-2:#A3B4D3; --hero-line:#1E3152; --hero-chip:#14254A;
+  --good:#11805A; --good-soft:#DCF2E8; --warn:#A35604; --warn-soft:#FBEAD3; --bad:#BE3434; --bad-soft:#FADFDF;
+  --scrim:rgba(10,22,40,.45); --shadow:0 1px 2px rgba(10,22,40,.05),0 10px 30px rgba(10,22,40,.08);
+  --f-display:'Sora',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-body:'DM Sans',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0A1628; --surface:#101F38; --surface-2:#172A47; --ink:#E8EEF9; --ink-2:#A2B2CC; --ink-3:#7487A6; --line:#22375A;
+  --accent:#4F86F7; --accent-strong:#6B9AFA; --accent-soft:#18305E; --on-accent:#FFFFFF;
+  --hero:#0D1B33; --hero-ink:#F2F6FF; --hero-ink-2:#A3B4D3; --hero-line:#1E3152; --hero-chip:#16294D;
+  --good:#3CC48B; --good-soft:#103327; --warn:#F1A849; --warn-soft:#3A2810; --bad:#F27777; --bad-soft:#3D1A20;
+  --scrim:rgba(0,0,0,.6); --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0A1628; --surface:#101F38; --surface-2:#172A47; --ink:#E8EEF9; --ink-2:#A2B2CC; --ink-3:#7487A6; --line:#22375A;
+  --accent:#4F86F7; --accent-strong:#6B9AFA; --accent-soft:#18305E; --on-accent:#FFFFFF;
+  --hero:#0D1B33; --hero-ink:#F2F6FF; --hero-ink-2:#A3B4D3; --hero-line:#1E3152; --hero-chip:#16294D;
+  --good:#3CC48B; --good-soft:#103327; --warn:#F1A849; --warn-soft:#3A2810; --bad:#F27777; --bad-soft:#3D1A20;
+  --scrim:rgba(0,0,0,.6); --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--hero)}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.2;margin:0;text-wrap:balance;letter-spacing:-.01em}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.num{font-variant-numeric:tabular-nums}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+
+/* top bar */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--hero);color:var(--hero-ink);border-bottom:1px solid var(--hero-line)}
+.top .wrap{display:flex;align-items:center;gap:14px;padding-block:10px}
+.brand{font-family:var(--f-display);font-weight:700;letter-spacing:.04em;font-size:17px;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.brand-mark{width:26px;height:26px;border-radius:7px;background:var(--accent);display:grid;place-items:center;color:#fff;font-size:14px}
+.nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;margin-left:auto;min-width:0}
+.nav::-webkit-scrollbar{display:none}
+.nav a{color:var(--hero-ink-2);text-decoration:none;font-size:14px;font-weight:500;padding:6px 10px;border-radius:999px;white-space:nowrap}
+.nav a:hover{color:var(--hero-ink);background:var(--hero-chip)}
+
+/* hero */
+.hero{background:var(--hero);color:var(--hero-ink)}
+.hero .wrap{padding-block:36px 44px;display:grid;gap:22px}
+.hero .eyebrow{color:#7FA6FF}
+.hero h1{font-size:clamp(28px,6.4vw,48px);font-weight:700;max-width:18ch}
+.hero h1 em{font-style:normal;color:#7FA6FF}
+.hero .lede{color:var(--hero-ink-2);font-size:17px;max-width:60ch}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--hero-line);border:1px solid var(--hero-line);border-radius:14px;overflow:hidden}
+@media (min-width:700px){.stats{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.stat{background:var(--hero);padding:14px 16px}
+.stat b{display:block;font-family:var(--f-display);font-size:26px;font-weight:600;color:var(--hero-ink)}
+.stat span{font-size:13px;color:var(--hero-ink-2)}
+.hero-cta{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:11px;padding:11px 16px;font-weight:600;font-size:15px;text-decoration:none;min-height:44px}
+.btn-primary{background:var(--accent);color:var(--on-accent)}
+.btn-primary:hover{background:var(--accent-strong)}
+.btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn-soft{background:var(--accent-soft);color:var(--accent)}
+.btn-sm{min-height:34px;padding:6px 12px;font-size:13.5px;border-radius:9px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.sample-note{font-size:13px;color:var(--hero-ink-2)}
+
+/* sections */
+section.block{padding-block:48px}
+section.block + section.block{border-top:1px solid var(--line)}
+.sec-head{display:grid;gap:8px;margin-bottom:24px;max-width:64ch}
+.sec-head h2{font-size:clamp(23px,4.6vw,32px);font-weight:600}
+.sec-head p{color:var(--ink-2)}
+
+/* demo layout */
+.demo-grid{display:grid;gap:24px;align-items:start}
+@media (min-width:880px){.demo-grid{grid-template-columns:minmax(0,1fr) 400px;gap:48px}.demo-side{position:sticky;top:calc(env(safe-area-inset-top,0px) + 80px)}}
+.roles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;background:var(--surface-2);padding:5px;border-radius:13px;margin-bottom:14px}
+.roles button{border:0;background:transparent;border-radius:9px;padding:9px 6px;font-weight:600;font-size:14px;color:var(--ink-2);line-height:1.2}
+.roles button small{display:block;font-weight:500;font-size:11.5px;color:var(--ink-3);margin-top:2px}
+.roles button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+.explain{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:8px}
+.explain h3{font-size:17px;font-weight:600}
+.explain p{color:var(--ink-2);font-size:15px}
+.explain .ref{font-size:12.5px;color:var(--ink-3)}
+.explain ul{margin:0;padding-left:18px;color:var(--ink-2);font-size:14.5px;display:grid;gap:4px}
+
+.device{background:var(--bg);border:1px solid var(--line);border-radius:26px;box-shadow:var(--shadow);overflow:clip;position:relative}
+@media (min-width:880px){.device{border:8px solid var(--ink);border-radius:38px}}
+.app-bar{display:flex;align-items:center;gap:10px;padding:14px 16px;background:var(--surface);border-bottom:1px solid var(--line)}
+.avatar{width:36px;height:36px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-weight:700;font-size:13px;flex:none}
+.app-bar .who{min-width:0}
+.app-bar .who b{display:block;font-size:15px;font-family:var(--f-display);font-weight:600}
+.app-bar .who span{font-size:12.5px;color:var(--ink-3);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.app-bar .tag{margin-left:auto;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--warn);background:var(--warn-soft);padding:3px 8px;border-radius:999px;white-space:nowrap}
+.screen{padding:16px 14px 20px;display:grid;gap:14px;min-height:540px;align-content:start}
+.tabbar{position:sticky;bottom:env(safe-area-inset-bottom,0px);display:grid;grid-auto-flow:column;grid-auto-columns:1fr;background:var(--surface);border-top:1px solid var(--line);z-index:5}
+.tabbar button{border:0;background:none;padding:9px 4px 10px;display:grid;justify-items:center;gap:3px;font-size:11.5px;font-weight:600;color:var(--ink-3)}
+.tabbar button svg{width:22px;height:22px}
+.tabbar button[aria-current="true"]{color:var(--accent)}
+svg.i{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;width:18px;height:18px;flex:none}
+
+/* app components */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px}
+.card-h{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.card-h h4{font-size:14.5px;font-weight:600}
+.muted{color:var(--ink-3);font-size:12.5px}
+.sub{color:var(--ink-2);font-size:13.5px}
+.row{display:flex;align-items:center;gap:10px}
+.row > .grow{flex:1;min-width:0}
+.list{display:grid}
+.list > .item{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid var(--line)}
+.list > .item:first-child{border-top:0;padding-top:2px}
+.item .grow{flex:1;min-width:0}
+.item .t{font-weight:600;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item .s{font-size:12.5px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+button.item{width:100%;background:none;border:0;border-top:1px solid var(--line);text-align:left;padding:11px 0}
+.list > button.item:first-child{border-top:0}
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;padding:3px 8px;border-radius:999px;white-space:nowrap;background:var(--surface-2);color:var(--ink-2)}
+.pill.good{background:var(--good-soft);color:var(--good)}
+.pill.warn{background:var(--warn-soft);color:var(--warn)}
+.pill.bad{background:var(--bad-soft);color:var(--bad)}
+.pill.info{background:var(--accent-soft);color:var(--accent)}
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.kpis.four{grid-template-columns:repeat(2,minmax(0,1fr))}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.kpi b{display:block;font-family:var(--f-display);font-size:20px;font-weight:600}
+.kpi span{font-size:12px;color:var(--ink-3)}
+.kpi.alert b{color:var(--bad)}
+.bar{height:6px;background:var(--surface-2);border-radius:99px;overflow:hidden}
+.bar > i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .5s}
+.bar.good > i{background:var(--good)} .bar.warn > i{background:var(--warn)} .bar.bad > i{background:var(--bad)}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.chips::-webkit-scrollbar{display:none}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;color:var(--ink-2);white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.timeline{display:grid;gap:0}
+.tl{display:grid;grid-template-columns:46px 18px minmax(0,1fr);gap:8px;align-items:start}
+.tl .time{font-size:12.5px;color:var(--ink-3);padding-top:2px}
+.tl .dot{width:12px;height:12px;border-radius:50%;border:2px solid var(--line);background:var(--surface);margin:4px auto 0;position:relative}
+.tl .dot::after{content:"";position:absolute;left:50%;top:12px;width:2px;height:52px;background:var(--line);transform:translateX(-50%)}
+.tl:last-child .dot::after{display:none}
+.tl.done .dot{background:var(--good);border-color:var(--good)}
+.tl.active .dot{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.tl .body{padding-bottom:16px;min-width:0}
+.big-money{font-family:var(--f-display);font-size:34px;font-weight:700;letter-spacing:-.02em}
+.notice{display:flex;gap:10px;align-items:flex-start;font-size:13px;border-radius:12px;padding:10px 12px;background:var(--warn-soft);color:var(--warn)}
+.notice.info{background:var(--accent-soft);color:var(--accent)}
+.notice svg{margin-top:1px}
+.field{display:grid;gap:5px}
+.field label{font-size:13px;font-weight:600;color:var(--ink-2)}
+.field input,.field select{font:inherit;font-size:16px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);width:100%}
+.form-grid{display:grid;gap:10px}
+.err{color:var(--bad);font-size:13px}
+.funnel .f-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;margin-bottom:10px}
+.funnel .f-row .bar{grid-column:1 / -1;height:9px}
+.funnel .lbl{font-size:13.5px;font-weight:600}
+.funnel .val{font-size:13px;color:var(--ink-2)}
+.stack{display:flex;height:12px;border-radius:99px;overflow:hidden;gap:2px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:10px;font-size:12.5px;color:var(--ink-2)}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:5px;vertical-align:0}
+.score{font-family:var(--f-display);font-weight:700;font-size:20px;color:var(--accent);min-width:44px;text-align:right}
+.reasons{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.emp-group{display:grid;gap:0}
+.emp-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.countdown{font-size:12px;font-weight:600}
+.mini-map{border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--surface-2)}
+.mini-map svg{display:block;width:100%;height:auto}
+
+/* sheet + toast */
+.scrim{position:fixed;inset:0;background:var(--scrim);z-index:50;display:flex;align-items:flex-end;justify-content:center;opacity:0;transition:opacity .2s}
+.scrim.open{opacity:1}
+.sheet{background:var(--bg);width:100%;max-width:480px;max-height:86vh;overflow:auto;border-radius:20px 20px 0 0;padding:8px max(16px,env(safe-area-inset-right,0px)) calc(20px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));transform:translateY(30px);transition:transform .25s;display:grid;gap:14px;overscroll-behavior:contain}
+.scrim.open .sheet{transform:none}
+.grab{width:40px;height:4px;border-radius:99px;background:var(--line);margin:4px auto 2px}
+.sheet h3{font-size:19px;font-weight:600}
+.opt-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.opt{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 12px;text-align:left;font-weight:600;font-size:14px}
+.opt small{display:block;font-weight:500;color:var(--ink-3);font-size:12px}
+.opt[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:11px 16px;border-radius:12px;font-size:14px;font-weight:500;z-index:60;opacity:0;transition:.25s;pointer-events:none;max-width:calc(100vw - 32px);width:max-content;box-shadow:var(--shadow)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.stepper{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:3px}
+.stepper i{height:6px;border-radius:99px;background:var(--surface-2)}
+.stepper i.on{background:var(--accent)}
+
+/* modules */
+.modules{display:grid;gap:10px}
+details.mod{background:var(--surface);border:1px solid var(--line);border-radius:14px}
+details.mod summary{list-style:none;cursor:pointer;padding:15px 16px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;align-items:center}
+details.mod summary::-webkit-details-marker{display:none}
+details.mod summary h3{font-size:16.5px;font-weight:600}
+details.mod summary .muted{grid-column:1}
+details.mod summary .chev{grid-row:1 / span 2;grid-column:2;transition:transform .2s;color:var(--ink-3)}
+details.mod[open] summary .chev{transform:rotate(180deg)}
+.mod-body{padding:0 16px 16px;display:grid;gap:12px}
+.mod-body ul{margin:0;padding-left:18px;display:grid;gap:6px;color:var(--ink-2);font-size:15px;max-width:68ch}
+.mod-body .btn{justify-self:start}
+@media (min-width:880px){.modules{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}}
+
+/* timeline gantt */
+.gantt{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:12px}
+.g-row{display:grid;grid-template-columns:minmax(0,1fr);gap:6px}
+@media (min-width:700px){.g-row{grid-template-columns:260px minmax(0,1fr);align-items:center;gap:16px}}
+.g-label{font-size:14px;min-width:0}
+.g-label b{font-weight:600}
+.g-label span{color:var(--ink-3);font-size:12.5px;display:block}
+.g-track{position:relative;height:22px;background:var(--surface-2);border-radius:6px}
+.g-bar{position:absolute;top:0;bottom:0;border-radius:6px;background:var(--accent);display:flex;align-items:center;padding-left:7px;color:var(--on-accent);font-size:11.5px;font-weight:600;white-space:nowrap;overflow:hidden}
+.g-ext{position:absolute;top:0;bottom:0;border-radius:0 6px 6px 0;background:var(--accent);opacity:.35}
+.g-bar.par{background:var(--good)} .g-ext.par{background:var(--good)}
+.g-axis{display:none}
+@media (min-width:700px){.g-axis{display:grid;grid-template-columns:260px minmax(0,1fr);gap:16px}.g-axis .ticks{position:relative;height:16px;font-size:11.5px;color:var(--ink-3)}.g-axis .ticks span{position:absolute;transform:translateX(-50%)}.g-axis .ticks span:first-child{transform:none}.g-axis .ticks span:last-child{transform:translateX(-100%)}}
+.g-key{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--ink-2)}
+.g-key i{display:inline-block;width:14px;height:9px;border-radius:3px;margin-right:6px;vertical-align:0}
+
+/* deliverables + stack */
+.two{display:grid;gap:24px}
+@media (min-width:880px){.two{grid-template-columns:repeat(2,minmax(0,1fr));gap:40px}}
+.dlist{list-style:none;margin:0;padding:0;display:grid;gap:0;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.dlist li{display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;padding:11px 14px;border-top:1px solid var(--line);font-size:15px}
+.dlist li:first-child{border-top:0}
+.dlist li b{font-family:var(--f-display);font-weight:600;color:var(--accent);font-size:14px}
+.stack-t{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:14.5px}
+.stack-t th,.stack-t td{text-align:left;padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+.stack-t tr:first-child th,.stack-t tr:first-child td{border-top:0}
+.stack-t th{font-weight:600;width:34%;color:var(--ink)}
+.stack-t td{color:var(--ink-2)}
+h3.small{font-size:17px;font-weight:600;margin-bottom:12px}
+.plain{margin:0;padding-left:18px;display:grid;gap:7px;color:var(--ink-2);font-size:15px}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px}
+.steps li::before{content:counter(s);width:32px;height:32px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-family:var(--f-display);font-weight:700}
+.steps b{display:block;font-weight:600}
+.steps span{color:var(--ink-2);font-size:14.5px}
+footer{padding-block:28px 40px;color:var(--ink-3);font-size:13px;border-top:1px solid var(--line)}
+/* ===== v2.1 upgrades: outcome hero, journey, more roles, efficiency, contact ===== */
+:root{--live:#5EE0A6;--hero-accent:#7FA6FF;--wa:#1E9E53;--wa-hover:#18884A;--on-wa:#FFFFFF}
+.top .cta-top{flex:none;background:var(--accent);color:var(--on-accent);text-decoration:none;font-size:13px;font-weight:600;padding:7px 12px;border-radius:999px;white-space:nowrap}
+.top .cta-top:hover{background:var(--accent-strong)}
+.hero .wrap{padding-block:32px 40px;gap:20px}
+.hero h1{max-width:20ch}
+.hero h1 em{color:var(--hero-accent)}
+.ticker{display:flex;align-items:center;gap:12px;background:var(--hero-chip);border:1px solid var(--hero-line);border-radius:12px;padding:10px 14px;font-size:14px;color:var(--hero-ink);min-height:64px}
+.ticker .live{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--live);flex:none}
+.ticker .live::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--live);animation:pulse 1.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(94,224,166,.55)}100%{box-shadow:0 0 0 9px rgba(94,224,166,0)}}
+.ticker .msg{min-width:0;flex:1;transition:opacity .3s,transform .3s}
+.ticker .msg.out{opacity:0;transform:translateY(5px)}
+.outcomes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (min-width:760px){.outcomes{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.outcome{background:var(--hero-chip);border:1px solid var(--hero-line);border-radius:12px;padding:12px;display:grid;gap:5px;align-content:start}
+.outcome svg{color:var(--hero-accent);width:22px;height:22px}
+.outcome b{font-size:14.5px;font-weight:600;line-height:1.3;color:var(--hero-ink)}
+.outcome span{font-size:12.5px;line-height:1.4;color:var(--hero-ink-2)}
+.btn-wa{background:var(--wa);color:var(--on-wa)}
+.btn-wa:hover{background:var(--wa-hover)}
+.byline{display:flex;align-items:center;gap:10px;font-size:14px;line-height:1.4;color:var(--hero-ink-2)}
+.byline b{color:var(--hero-ink);font-weight:600}
+.alfa-mark{width:38px;height:38px;border-radius:10px;background:var(--hero-accent);color:var(--hero);display:grid;place-items:center;font-family:var(--f-display);font-weight:700;font-size:17px;flex:none}
+.alfa-mark.lg{width:46px;height:46px;font-size:21px;border-radius:12px}
+
+/* journey */
+.journey{display:grid}
+.j-step{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;position:relative;padding-bottom:18px}
+.j-step:not(:last-child)::before{content:"";position:absolute;left:21px;top:48px;bottom:4px;width:2px;background:var(--line)}
+.j-ic{width:44px;height:44px;border-radius:12px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center}
+.j-ic svg{width:22px;height:22px}
+.j-body{min-width:0;display:grid;gap:2px;justify-items:start}
+.j-body .who{font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.j-body b{font-family:var(--f-display);font-weight:600;font-size:16px}
+.j-body p{color:var(--ink-2);font-size:14.5px}
+.j-go{margin-top:6px}
+@media (min-width:880px){.journey{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.j-step{grid-template-columns:1fr;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;align-content:start}.j-step:not(:last-child)::before{display:none}}
+.tour-cta{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin-top:20px}
+
+/* demo: five roles, hint bar, new widgets */
+.roles{grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;padding:4px}
+.roles button{display:grid;justify-items:center;gap:4px;padding:8px 2px;font-size:12px}
+.roles button svg{width:20px;height:20px}
+@media (min-width:500px){.roles button{font-size:13px}}
+.demo-tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+@media (max-width:879px){.explain ul,.explain .ref{display:none}.explain{padding:12px 14px}}
+.hint{display:flex;align-items:center;gap:8px;padding:9px 12px 9px 14px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:500;line-height:1.35;border-bottom:1px solid var(--line)}
+.hint .grow{flex:1;min-width:0}
+.hint .step{font-weight:700;flex:none}
+.hint button{border:0;background:var(--accent);color:var(--on-accent);border-radius:8px;padding:7px 11px;font-size:12.5px;font-weight:600;flex:none}
+.hint button.ghost{background:transparent;color:var(--accent);padding:7px 6px}
+.btn-plain{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.switch{display:flex;align-items:center;gap:10px;border:0;background:none;padding:0;font-size:13.5px;font-weight:600;color:var(--ink-2)}
+.switch i{width:40px;height:24px;border-radius:99px;background:var(--line);position:relative;transition:background .2s;flex:none}
+.switch i::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--surface);transition:left .2s;box-shadow:var(--shadow)}
+.switch[aria-checked="true"] i{background:var(--warn)}
+.switch[aria-checked="true"] i::after{left:19px}
+.offline-bar{display:flex;gap:8px;align-items:center;background:var(--warn-soft);color:var(--warn);font-size:13px;font-weight:600;padding:9px 12px;border-radius:10px}
+.aria-card{background:var(--accent-soft);border-radius:14px;padding:13px 14px;display:grid;gap:5px}
+.aria-card .h{display:flex;gap:6px;align-items:center;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.aria-card .sub{color:var(--ink-2)}
+.aria-card .btn{justify-self:start;margin-top:6px}
+.status-dot{width:10px;height:10px;border-radius:50%;flex:none}
+.sd-visit{background:var(--good)} .sd-route{background:var(--accent)} .sd-idle{background:var(--warn)} .sd-off{background:var(--bad)}
+.alert-item{display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:12px;background:var(--bad-soft);color:var(--bad);font-size:13px;line-height:1.4}
+.alert-item.warn{background:var(--warn-soft);color:var(--warn)}
+.alert-item .grow{flex:1;min-width:0}
+.alert-item b{display:block;font-weight:600;font-size:13.5px}
+.rank{width:22px;font-family:var(--f-display);font-weight:700;color:var(--ink-3);flex:none}
+.ch-ic{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;flex:none}
+.ch-wa{background:var(--good-soft);color:var(--good)} .ch-sms{background:var(--accent-soft);color:var(--accent)} .ch-mail{background:var(--warn-soft);color:var(--warn)}
+.camp{display:grid;gap:10px}
+.camp .kpi b{font-size:16px}
+.tpl{background:var(--surface-2);border-radius:12px;padding:12px;font-size:14px;white-space:pre-line;color:var(--ink-2)}
+.emi-big{font-family:var(--f-display);font-size:34px;font-weight:700;letter-spacing:-.02em}
+.split{display:flex;height:12px;border-radius:99px;overflow:hidden;gap:2px}
+.split span{display:block;transition:width .2s}
+.split .p{background:var(--accent)} .split .i2{background:var(--warn)}
+.chat{display:grid;gap:10px}
+.msg-b{max-width:86%;padding:10px 13px;border-radius:16px;font-size:14.5px;line-height:1.45}
+.msg-b.bot{background:var(--surface);border:1px solid var(--line);border-bottom-left-radius:5px;justify-self:start}
+.msg-b.me{background:var(--accent);color:var(--on-accent);border-bottom-right-radius:5px;justify-self:end}
+.chips.wrapq{flex-wrap:wrap;overflow:visible}
+.chat-input{display:flex;gap:8px}
+.chat-input input{flex:1;min-width:0;font:inherit;font-size:16px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink)}
+.typing{display:inline-flex;gap:4px;padding:4px 0}
+.typing i{width:7px;height:7px;border-radius:50%;background:var(--ink-3);animation:blink 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s} .typing i:nth-child(3){animation-delay:.3s}
+@keyframes blink{0%,100%{opacity:.25}50%{opacity:1}}
+.slider{display:grid;gap:4px}
+.slider .top-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:14px}
+.slider label{font-weight:600;color:var(--ink-2)}
+.slider output{font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums;white-space:nowrap}
+.slider input[type=range]{width:100%;accent-color:var(--accent);height:30px;margin:0}
+
+/* benefits + calculator */
+.ba-grid{display:grid;gap:12px}
+@media (min-width:700px){.ba-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1000px){.ba-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.ba{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:12px;align-content:start}
+.ba h3{font-size:16.5px;font-weight:600;display:flex;gap:10px;align-items:center}
+.ba h3 svg{color:var(--accent);width:22px;height:22px}
+.ba .row2{display:grid;grid-template-columns:62px minmax(0,1fr);gap:10px;font-size:14.5px;line-height:1.5}
+.ba .tg{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding-top:3px}
+.ba .b .tg,.ba .b span:last-child{color:var(--ink-3)}
+.ba .a .tg{color:var(--good)} .ba .a span:last-child{color:var(--ink)}
+.sec-head h3{font-size:clamp(19px,3.8vw,24px);font-weight:600}
+.calc{display:grid;gap:22px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px}
+@media (min-width:880px){.calc{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:36px;padding:26px}}
+.calc-in{display:grid;gap:14px;align-content:start}
+.calc-out{display:grid;gap:10px;align-content:start}
+.big-stat{background:var(--accent);color:var(--on-accent);border-radius:14px;padding:18px}
+.big-stat b{display:block;font-family:var(--f-display);font-size:clamp(36px,10vw,52px);font-weight:700;letter-spacing:-.02em;line-height:1.05}
+.big-stat span{font-size:14px}
+.calc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.calc-grid .kpi b{font-size:24px}
+details.how summary{cursor:pointer;font-size:14px;font-weight:600;color:var(--accent);padding:4px 0}
+details.how ul{margin:8px 0 0;padding-left:18px;font-size:13.5px;color:var(--ink-2);display:grid;gap:5px}
+
+/* contact */
+.contact{background:var(--hero);color:var(--hero-ink);border-radius:20px;padding:24px 20px;display:grid;gap:22px}
+@media (min-width:880px){.contact{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);align-items:center;padding:40px;gap:40px}}
+.contact h2{font-size:clamp(25px,5.4vw,36px);font-weight:600}
+.contact p{color:var(--hero-ink-2);max-width:48ch}
+.contact .lbl{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--hero-ink-2)}
+.phone-big{font-family:var(--f-display);font-size:clamp(28px,8vw,38px);font-weight:700;letter-spacing:.01em;color:var(--hero-ink);-webkit-user-select:all;user-select:all}
+.contact .actions{display:grid;gap:10px;min-width:0}
+.contact .btn-ghost{color:var(--hero-ink);border-color:var(--hero-line)}
+.contact .btn-ghost:hover{background:var(--hero-chip)}
+.two-btn{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand"><span class="brand-mark">F</span>FLOCRED <span style="font-weight:500;color:var(--hero-ink-2);letter-spacing:0">v2</span></div>
+    <nav class="nav" aria-label="Sections">
+      <a href="#journey">How it works</a><a href="#demo">Demo</a><a href="#benefits">Benefits</a><a href="#modules">Modules</a><a href="#timeline">Timeline</a><a href="#deliverables">Deliverables</a>
+    </nav>
+    <a class="cta-top" href="#contact">Talk to us</a>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="wrap">
+    <span class="eyebrow">Proposal for FLOCRED Pvt Ltd · v2 platform</span>
+    <h1>Run FLOCRED’s whole loan business <em>from one app.</em></h1>
+    <p class="lede">Leads get assigned on their own, every field visit comes with proof, ARIA ranks the best lenders for each file, and DSAs serve themselves. You see all of it live, on your phone.</p>
+    <div class="ticker"><span class="live">LIVE</span><span class="msg" id="tick">New WhatsApp lead · Business Loan ₹12 L · auto-assigned to Rahul (Dwarka) in 2 sec</span></div>
+    <div class="outcomes">
+      <div class="outcome"><span data-ic="shuffle"></span><b>Leads assigned in seconds</b><span>By zone and workload, no manual forwarding</span></div>
+      <div class="outcome"><span data-ic="pin"></span><b>Every visit verified</b><span>Geo-tagged check-ins with photo proof</span></div>
+      <div class="outcome"><span data-ic="spark"></span><b>Best lender, ranked by AI</b><span>On CIBIL, product and ticket size</span></div>
+      <div class="outcome"><span data-ic="wallet"></span><b>DSAs serve themselves</b><span>Free sign-up, prepaid wallet, live payouts</span></div>
+    </div>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#journey">See how it works</a>
+      <a class="btn btn-wa" href="https://wa.me/919568306670?text=Hi%20Alfa%20Team%2C%20we%20saw%20the%20FLOCRED%20v2%20proposal%20and%20want%20to%20discuss%20it." target="_blank" rel="noopener">WhatsApp us</a>
+    </div>
+    <div class="byline"><span class="alfa-mark">A</span><span>Prepared by <b>Alfa Team Management</b><br><span class="num">+91 95683 06670</span></span></div>
+  </div>
+</section>
+
+<section class="block" id="journey">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">How it works</span>
+      <h2>One loan, from first click to commission</h2>
+      <p>Eight steps across five people, all in one system. Tap a step to open that exact screen in the working demo, or let the guided tour walk you through it.</p>
+    </div>
+    <div class="journey" id="journeyList"></div>
+    <div class="tour-cta"><button class="btn btn-primary" data-tour="start">Start the guided tour</button><span class="muted">About 2 minutes. Every screen works on your phone.</span></div>
+  </div>
+</section>
+
+<section class="block" id="demo">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Working demo</span>
+      <h2>Try it as each person who will use it</h2>
+      <p>Pick a role and tap around. Every button works, and the blue bar inside the app tells you what to try next. Sample data only, so nothing is saved or sent.</p>
+    </div>
+    <div class="demo-grid">
+      <div class="demo-side">
+        <div class="roles" id="roles" role="group" aria-label="Choose a role"></div>
+        <div class="explain" id="explain"></div>
+        <div class="demo-tools"><button class="btn btn-soft btn-sm" data-tour="start">Start guided tour</button><button class="btn btn-ghost btn-sm" id="resetDemo">Reset demo</button></div>
+      </div>
+      <div class="device" id="device">
+        <div class="app-bar" id="appbar"></div>
+        <div class="hint" id="hint"></div>
+        <div class="screen" id="screen"></div>
+        <nav class="tabbar" id="tabbar" aria-label="App sections"></nav>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="benefits">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Efficiency</span>
+      <h2>Less chasing, more disbursals</h2>
+      <p>What changes for each team once leads, visits, lenders and payouts run in one system.</p>
+    </div>
+    <div class="ba-grid" id="baGrid"></div>
+    <div class="sec-head" style="margin-top:44px">
+      <h3>Estimate the hours your team gets back</h3>
+      <p>Move the sliders to match FLOCRED’s team. The defaults use the planned 40 field executives and 10 team leads.</p>
+    </div>
+    <div class="calc">
+      <div class="calc-in" id="calcIn"></div>
+      <div class="calc-out">
+        <div class="big-stat"><b class="num" id="c-hours">865</b><span>hours saved every month (estimate)</span></div>
+        <div class="calc-grid">
+          <div class="kpi"><b class="num" id="c-fte">4.2</b><span>full-time people’s worth of work</span></div>
+          <div class="kpi"><b class="num" id="c-visits">780</b><span>extra field visits possible each month</span></div>
+        </div>
+        <details class="how"><summary>How this is calculated</summary><ul>
+          <li>Each field executive saves the minutes you choose per day on reports, DSR updates and attendance, over 26 working days.</li>
+          <li>Each team lead saves 45 minutes a day on status calls and manual reports.</li>
+          <li>Each lead saves 6 minutes of forwarding, duplicate checks and status updates.</li>
+          <li>One full-time person works about 208 hours a month. One field visit takes about 40 minutes.</li>
+          <li>These are planning estimates to discuss together, not guaranteed results.</li>
+        </ul></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="modules">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">What we build</span>
+      <h2>Ten modules, one connected system</h2>
+      <p>Each module follows the Scope of Work section shown under its name. The existing flocred.com site and Admin Panel v4.0 are carried forward and extended, not thrown away.</p>
+    </div>
+    <div class="modules" id="modlist"></div>
+  </div>
+</section>
+
+<section class="block" id="timeline">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Indicative timeline</span>
+      <h2>Eight phases, some running side by side</h2>
+      <p>Durations come from the Scope of Work. The solid bar is the shorter estimate and the faded end is the longer one. The order shown is a sample plan; the final schedule depends on team size and sign-off.</p>
+    </div>
+    <div class="gantt" id="gantt"></div>
+  </div>
+</section>
+
+<section class="block" id="deliverables">
+  <div class="wrap two">
+    <div>
+      <h3 class="small">15 deliverables</h3>
+      <ol class="dlist" id="dlist"></ol>
+    </div>
+    <div style="display:grid;gap:28px;align-content:start;min-width:0">
+      <div>
+        <h3 class="small">Technology</h3>
+        <div style="overflow-x:auto"><table class="stack-t"><tbody id="stack"></tbody></table></div>
+      </div>
+      <div>
+        <h3 class="small">Not included</h3>
+        <ul class="plain">
+          <li>Statutory payroll processing and tax filing. HRMS exports payroll-ready data only.</li>
+          <li>Changes inside each bank's own systems, beyond agreed API connections.</li>
+          <li>Buying ads. The campaign module handles dispatch and attribution.</li>
+          <li>Buying devices for field staff.</li>
+          <li>Legal and compliance review of loan products and lender disclosures.</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="small">What we need from FLOCRED</h3>
+        <ul class="plain">
+          <li>Access to the flocred.com codebase, Supabase project, WATI account, hosting and DNS.</li>
+          <li>Bank and lender policy data and product lists as new lenders are added.</li>
+          <li>Written employee consent and a published policy before screen-time and location tracking go live.</li>
+          <li>A decision on the mobile stack (React Native, Flutter or native) at the design stage.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="next">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Next steps</span>
+      <h2>From review to kickoff</h2>
+    </div>
+    <ol class="steps">
+      <li><div><b>Review this scope</b><span>Go through the modules and demo, and mark anything to add, remove or reprioritise.</span></div></li>
+      <li><div><b>Confirm the open decisions</b><span>Mobile stack, per-use wallet pricing for DSAs, and which bank APIs connect first.</span></div></li>
+      <li><div><b>Share system access</b><span>Codebase, Supabase, WATI and DNS, so discovery can start on the live system.</span></div></li>
+      <li><div><b>Sign off and start Phase 1</b><span>Discovery, architecture and UI/UX for web and mobile, about 2 to 3 weeks.</span></div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="block" id="contact">
+  <div class="wrap">
+    <div class="contact">
+      <div style="display:grid;gap:14px;min-width:0">
+        <div class="byline"><span class="alfa-mark lg">A</span><span><b>Alfa Team Management</b><br>Prepared this proposal for FLOCRED</span></div>
+        <h2>Ready to build FLOCRED v2?</h2>
+        <p>Call or WhatsApp us. We’ll walk through the demo with your team, adjust the scope to your priorities, and plan Phase 1.</p>
+      </div>
+      <div class="actions">
+        <div><div class="lbl">Call or WhatsApp</div><div class="phone-big num" id="phoneNum">+91 95683 06670</div></div>
+        <a class="btn btn-wa" href="https://wa.me/919568306670?text=Hi%20Alfa%20Team%2C%20we%20saw%20the%20FLOCRED%20v2%20proposal%20and%20want%20to%20discuss%20it." target="_blank" rel="noopener">WhatsApp Alfa Team</a>
+        <div class="two-btn"><a class="btn btn-ghost" href="tel:+919568306670">Call now</a><button class="btn btn-ghost" id="copyNum" type="button">Copy number</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Prepared by Alfa Team Management · +91 95683 06670 · for FLOCRED Private Limited. Based on the FLOCRED v2 Scope of Work, Draft 1.0 (18 September 2026). Names, numbers and lenders in the demo are sample data. Final timelines, resourcing and commercials will be confirmed after requirements sign-off.</div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const inr = n => '₹' + Math.round(n).toLocaleString('en-IN');
+const lakh = n => n >= 1e7 ? '₹' + (+(n/1e7).toFixed(2)) + ' Cr' : '₹' + (+(n/1e5).toFixed(1)) + ' L';
+const pad = n => String(n).padStart(2,'0');
+const clock = d => { let h=d.getHours(), m=d.getMinutes(); const ap = h>=12?'PM':'AM'; h = h%12||12; return h+':'+pad(m)+' '+ap; };
+const todayStr = () => new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+
+const IC = {
+  home:'<path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z"/>',
+  users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c1.9.7 3.1 2.4 3.5 5.2"/>',
+  phone:'<path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z"/>',
+  funnel:'<path d="M3 4h18l-7 8v6l-4 2v-8z"/>',
+  shuffle:'<path d="M3 7h4l10 10h4M3 17h4l3-3M14 10l3-3h4M18 4l3 3-3 3M18 14l3 3-3 3"/>',
+  spark:'<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/>',
+  pin:'<path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>',
+  wallet:'<path d="M3 7a2 2 0 0 1 2-2h13v4"/><path d="M3 7v11a2 2 0 0 0 2 2h15V9H5a2 2 0 0 1-2-2z"/><circle cx="16" cy="14.5" r="1.3"/>',
+  send:'<path d="M21 3 10 14M21 3l-7 18-4-7-7-4z"/>',
+  cash:'<rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.8"/>',
+  check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  shield:'<path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/>',
+  camera:'<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',
+  route:'<circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8.5 18H15a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h6.5"/>',
+  chev:'<path d="M6 9l6 6 6-6"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  bell:'<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 20a2 2 0 0 0 4 0"/>'
+};
+const ic = (n, cls='i') => `<svg class="${cls}" viewBox="0 0 24 24" aria-hidden="true">${IC[n]}</svg>`;
+
+/* ---------------- sample data ---------------- */
+const STAGES = ['New','Contacted','Qualified','Docs collected','Submitted to lender','Sanctioned','Disbursed','Closed'];
+const LOST_REASONS = ['Low CIBIL','Not interested','Not reachable','Documents not available','Rate mismatch','Duplicate lead'];
+const now = Date.now(), H = 3600e3;
+
+function freshState(){
+  return {
+  role:'field',
+  screen:{field:'today', ops:'pipeline', dsa:'wallet'},
+  field:{
+    checkIn:'9:41 AM', checkedOut:false,
+    visits:[
+      {id:1,t:'10:00 AM',name:'Sharma Electronics',area:'Dwarka Sec 6',status:'done',note:'Interested in ₹10 L business loan'},
+      {id:2,t:'11:30 AM',name:'Gupta Medical Store',area:'Dwarka Sec 10',status:'done',note:'Asked for callback next week'},
+      {id:3,t:'1:00 PM',name:'Sanjay Traders',area:'Uttam Nagar',status:'planned'},
+      {id:4,t:'3:00 PM',name:'Balaji Hardware',area:'Palam',status:'planned'},
+      {id:5,t:'4:30 PM',name:'Rakesh Auto Parts',area:'Palam',status:'planned'},
+      {id:6,t:'6:00 PM',name:'Neha Gupta (home visit)',area:'Dwarka Sec 12',status:'planned'}
+    ],
+    leads:[
+      {id:1,name:'Amit Khanna',product:'Business Loan',amt:1200000,area:'Dwarka Sec 7',stage:2,phone:'98•••••412',src:'WhatsApp (WATI)'},
+      {id:2,name:'Priya Sharma',product:'Personal Loan',amt:350000,area:'Janakpuri',stage:1,phone:'99•••••087',src:'Website · EMI calculator'},
+      {id:3,name:'Sanjay Traders',product:'Loan Against Property',amt:4500000,area:'Uttam Nagar',stage:3,phone:'98•••••230',src:'Connector · Mehta Finserv'},
+      {id:4,name:'Neha Gupta',product:'Home Loan',amt:6000000,area:'Dwarka Sec 12',stage:0,phone:'97•••••561',src:'Campaign · Diwali WhatsApp'},
+      {id:5,name:'Rakesh Auto Parts',product:'Business Loan',amt:800000,area:'Palam',stage:4,phone:'98•••••774',src:'Cold call'}
+    ],
+    calls:[
+      {t:'12:10 PM',who:'Priya Sharma',out:'Call back',dur:'1m 05s'},
+      {t:'11:52 AM',who:'Amit Khanna',out:'Connected · interested',dur:'4m 31s'},
+      {t:'10:48 AM',who:'Vikas Bansal',out:'Not reachable',dur:'0m 00s'},
+      {t:'10:40 AM',who:'Rakesh Auto Parts',out:'Connected · interested',dur:'3m 12s'},
+      {t:'9:58 AM',who:'Meena Arora',out:'Not interested',dur:'0m 48s'},
+      {t:'9:50 AM',who:'Neha Gupta',out:'Connected · interested',dur:'6m 02s'}
+    ],
+    target:{calls:25, visits:6}
+  },
+  ops:{
+    zone:'All',
+    employees:[
+      {id:'e1',name:'Rahul Verma',zone:'Delhi West',load:14,max:20},
+      {id:'e2',name:'Pooja Singh',zone:'Delhi West',load:18,max:20},
+      {id:'e3',name:'Imran Ali',zone:'Noida',load:9,max:20},
+      {id:'e4',name:'Kavita Rao',zone:'Noida',load:16,max:20},
+      {id:'e5',name:'Deepak Yadav',zone:'Gurgaon',load:11,max:18},
+      {id:'e6',name:'Sneha Kapoor',zone:'Gurgaon',load:17,max:18}
+    ],
+    queue:[
+      {id:'q1',name:'Harish Malhotra',product:'Business Loan',amt:1500000,zone:'Delhi West',src:'Website',to:null},
+      {id:'q2',name:'Farida Khan',product:'Personal Loan',amt:250000,zone:'Noida',src:'WhatsApp',to:null},
+      {id:'q3',name:'Lakshmi Textiles',product:'Loan Against Property',amt:3800000,zone:'Gurgaon',src:'AI Lead Scraper',to:null},
+      {id:'q4',name:'Ankit Jain',product:'Home Loan',amt:5500000,zone:'Delhi West',src:'Call centre',to:null},
+      {id:'q5',name:'Rohit Sehgal',product:'Business Loan',amt:900000,zone:'Noida',src:'Connector',to:null},
+      {id:'q6',name:'Kiran Dairy',product:'Business Loan',amt:600000,zone:'Gurgaon',src:'Campaign · Google',to:null}
+    ],
+    matchLead:0, referred:{},
+    dsrFilter:'All',
+    dsr:[
+      {id:'d1',emp:'Rahul Verma',shop:'Sharma Electronics',phone:'98•••••311',area:'Dwarka Sec 6',ago:3.2,status:'Verified',x:30,y:55},
+      {id:'d2',emp:'Rahul Verma',shop:'Gupta Medical Store',phone:'99•••••904',area:'Dwarka Sec 10',ago:1.7,status:'Called',x:52,y:38},
+      {id:'d3',emp:'Rahul Verma',shop:'Om Sweets',phone:'97•••••128',area:'Dwarka Sec 4',ago:43.4,status:'Contacted',x:22,y:30},
+      {id:'d4',emp:'Imran Ali',shop:'City Mobile Hub',phone:'98•••••672',area:'Noida Sec 18',ago:2.4,status:'Contacted',x:66,y:62},
+      {id:'d5',emp:'Imran Ali',shop:'Shree Ganesh Kirana',phone:'96•••••450',area:'Noida Sec 27',ago:0.8,status:'Called',x:40,y:48},
+      {id:'d6',emp:'Imran Ali',shop:'Aggarwal Steel',phone:'98•••••019',area:'Noida Sec 63',ago:44.6,status:'Called',x:74,y:28},
+      {id:'d7',emp:'Deepak Yadav',shop:'Cyber Print Studio',phone:'99•••••233',area:'Sohna Road',ago:4.1,status:'Verified',x:58,y:70},
+      {id:'d8',emp:'Deepak Yadav',shop:'Haryana Tyres',phone:'98•••••885',area:'Sector 14, Gurgaon',ago:1.1,status:'Contacted',x:35,y:40}
+    ]
+  },
+  dsa:{
+    price:50,
+    events:[
+      {type:'Recharge · UPI',amt:1000,date:'28 Oct 2026',status:'Success'},
+      {type:'Lead unlock · Business Loan',amt:-50,date:'29 Oct 2026',status:'Success'},
+      {type:'Lead unlock · Personal Loan',amt:-50,date:'31 Oct 2026',status:'Success'},
+      {type:'Recharge · UPI',amt:1000,date:'05 Nov 2026',status:'Success'},
+      {type:'Lead unlock · Home Loan',amt:-50,date:'06 Nov 2026',status:'Success'},
+      {type:'Priority allotment · LAP',amt:-150,date:'09 Nov 2026',status:'Success'},
+      {type:'Lead unlock · Business Loan',amt:-50,date:'11 Nov 2026',status:'Success'},
+      {type:'Lead unlock × 8 · Bulk',amt:-400,date:'13 Nov 2026',status:'Success'}
+    ],
+    market:[
+      {id:'m1',name:'Jaspreet S.',product:'Business Loan',amt:700000,area:'Janakpuri',cibil:'750–799',unlocked:false,phone:'98•••••516'},
+      {id:'m2',name:'Ritu M.',product:'Personal Loan',amt:300000,area:'Tilak Nagar',cibil:'700–749',unlocked:false,phone:'99•••••342'},
+      {id:'m3',name:'Kumar Garments',product:'Loan Against Property',amt:2500000,area:'Rajouri Garden',cibil:'750–799',unlocked:false,phone:'97•••••808'}
+    ],
+    referrals:[
+      {name:'Manoj Batra',product:'Business Loan',amt:1000000,stage:6,comm:12000},
+      {name:'Sunita Arora',product:'Home Loan',amt:4200000,stage:5,comm:21000},
+      {name:'Delhi Fab Works',product:'Loan Against Property',amt:3000000,stage:4,comm:15000},
+      {name:'Vivek Chawla',product:'Personal Loan',amt:400000,stage:2,comm:4000},
+      {name:'Neelam Kaur',product:'Personal Loan',amt:250000,stage:7,comm:0,lost:'Low CIBIL'}
+    ],
+    payouts:[
+      {id:'P-1042',amt:8000,date:'02 Nov 2026',status:'Paid'},
+      {id:'P-1017',amt:4000,date:'18 Oct 2026',status:'Paid'}
+    ],
+    earned:18400
+  }
+};}
+let S = freshAll();
+
+const LENDERS = [
+  {n:'Private Bank · A',p:['Business Loan','Personal Loan','Home Loan','Loan Against Property'],min:750,lo:100000,hi:10000000,gap:6},
+  {n:'Private Bank · B',p:['Business Loan','Personal Loan','Home Loan','Loan Against Property'],min:730,lo:50000,hi:7500000,gap:3},
+  {n:'NBFC · C',p:['Business Loan','Personal Loan','Loan Against Property'],min:685,lo:100000,hi:5000000,gap:8},
+  {n:'NBFC · D',p:['Business Loan','Loan Against Property','Home Loan'],min:700,lo:500000,hi:15000000,gap:4},
+  {n:'Fintech NBFC · E',p:['Business Loan','Personal Loan'],min:650,lo:50000,hi:2000000,gap:7},
+  {n:'PSU Bank · F',p:['Home Loan','Loan Against Property','Business Loan'],min:720,lo:500000,hi:20000000,gap:2},
+  {n:'Housing Finance · G',p:['Home Loan','Loan Against Property'],min:680,lo:1000000,hi:15000000,gap:5}
+];
+const MATCH_LEADS = [
+  {name:'Amit Khanna',product:'Business Loan',amt:1200000,band:'750–799',mid:775,area:'Dwarka',vintage:'6 yrs in business'},
+  {name:'Sanjay Traders',product:'Loan Against Property',amt:4500000,band:'700–749',mid:725,area:'Uttam Nagar',vintage:'Commercial property, self-owned'},
+  {name:'Priya Sharma',product:'Personal Loan',amt:350000,band:'650–699',mid:675,area:'Janakpuri',vintage:'Salaried, ₹62k/month'}
+];
+function matchLenders(L){
+  const ok=[], out=[];
+  LENDERS.forEach(x=>{
+    if(!x.p.includes(L.product)) return out.push({n:x.n, why:"Doesn't offer "+L.product});
+    if(L.mid < x.min) return out.push({n:x.n, why:'Needs CIBIL '+x.min+'+'});
+    if(L.amt < x.lo || L.amt > x.hi) return out.push({n:x.n, why:'Ticket size outside '+lakh(x.lo)+'–'+lakh(x.hi)});
+    const head = Math.min(20, Math.round((L.mid - x.min)/3));
+    const mid = (x.lo + x.hi)/2, fit = Math.round(10 - Math.min(10, Math.abs(Math.log(L.amt/mid))*3));
+    const score = Math.min(94, 56 + head + fit + x.gap);
+    const reasons = ['Product fit', 'CIBIL '+(L.mid - x.min >= 30 ? 'well above' : 'above')+' minimum', x.gap>=6 ? 'Lender behind volume target' : 'Ticket size in range'];
+    ok.push({n:x.n, score, reasons});
+  });
+  ok.sort((a,b)=>b.score-a.score);
+  return {ok, out};
+}
+
+/* ---------------- toast + sheet ---------------- */
+let toastT;
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),2600); }
+let sheetEl=null;
+function openSheet(html){
+  closeSheet(true);
+  sheetEl = document.createElement('div'); sheetEl.className='scrim';
+  sheetEl.innerHTML = `<div class="sheet" role="dialog" aria-modal="true"><div class="grab"></div>${html}</div>`;
+  sheetEl.addEventListener('click', e=>{ if(e.target===sheetEl) closeSheet(); });
+  document.body.appendChild(sheetEl);
+  requestAnimationFrame(()=>sheetEl && sheetEl.classList.add('open'));
+  const f = sheetEl.querySelector('button, input, select'); if(f) setTimeout(()=>f.focus({preventScroll:true}),50);
+}
+function closeSheet(instant){
+  if(!sheetEl) return; const el=sheetEl; sheetEl=null;
+  if(instant){ el.remove(); return; }
+  el.classList.remove('open'); setTimeout(()=>el.remove(),220);
+}
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeSheet(); });
+
+/* ---------------- role config ---------------- */
+const ROLES = {
+  field:{
+    bar:{init:'RV',name:'Rahul Verma',sub:'Field Sales Executive · Delhi West, Zone 4'},
+    tabs:[['today','Today','home'],['leads','My leads','users'],['calls','Calls','phone']],
+    explain:{
+      today:['Field executive: today','The executive’s day on the Android or iOS app. Attendance is geo-tagged, visits follow a planned beat, and each check-in and check-out is logged against the plan.',['Tap Check in on the next visit, then Check out','Planned-vs-actual counts update as you go','Works offline and syncs when back in network'],'SOW §3.6 HRMS attendance · §3.7 Visit planning · §3.8 Mobile apps'],
+      leads:['Field executive: assigned leads','Executives see only the leads assigned to them. Every lead shows its source and moves through the 8-stage pipeline, with a reason code if it drops out.',['Tap a lead, then Log call or Move to next stage','Try Mark as lost to see the reason codes'],'SOW §3.3 Lead lifecycle · role-based views'],
+      calls:['Field executive: call log','Every call is logged with number, duration and outcome, and linked to the lead. Team leads see these numbers roll up live.',['Calls logged from a lead appear here instantly','Daily target progress sits at the top'],'SOW §3.7 Cold-calling tracking']
+    }
+  },
+  ops:{
+    bar:{init:'OP',name:'Ops Console',sub:'Admin · all zones · last 30 days'},
+    tabs:[['pipeline','Pipeline','funnel'],['allot','Allotment','shuffle'],['match','AI match','spark'],['dsr','DSR','pin']],
+    explain:{
+      pipeline:['Ops: conversion funnel','The full pipeline from new lead to disbursal, with conversion and average turnaround time at every stage, and the top reasons leads are lost.',['Switch zones to filter the funnel','Reason codes come straight from field updates'],'SOW §3.3 Reporting: funnel, TAT, zone and product views'],
+      allot:['Ops: lead allotment','New and unassigned leads are allotted by zone and by each executive’s current workload against their daily limit. Ops can override any assignment.',['Tap Auto-allot to watch the queue clear','Tap any lead to reassign it by hand'],'SOW §3.3 Lead Allotment engine · §3.10 Admin Panel v4.0'],
+      match:['Ops: AI lender match','For a lead ready to refer, ARIA ranks eligible lenders by match score using product, ticket size, CIBIL band and lender volume targets. Ops approve before anything goes to the lender.',['Pick a borrower to re-rank lenders','Excluded lenders show the reason'],'SOW §3.3 Product matrix & policy matching · §3.9 AI Lender Matching'],
+      dsr:['Ops: DSR visit verification','Location-pinned, photo-verified field visits grouped by executive. Photos are deleted by the server 48 hours after capture. Only name, number and location are kept.',['Tap a visit to see the map and Mark verified','Watch the countdown on visits near the 48-hour limit','Tap 8-hour trail to see an executive’s day'],'SOW §3.7 Visit Verification (DSR) module']
+    }
+  },
+  dsa:{
+    bar:{init:'MF',name:'Mehta Finserv',sub:'Connector / DSA · Janakpuri'},
+    tabs:[['wallet','Wallet','wallet'],['refs','Referrals','send'],['payouts','Payouts','cash']],
+    explain:{
+      wallet:['DSA: prepaid wallet','Signing up is free with no subscription. DSAs recharge a wallet and pay per use, for example per lead unlock. Every rupee shows in the ledger with the balance after it.',['Unlock a lead and watch the balance drop','Recharge to top up; low balance raises an alert','Per-use price shown is a sample; FLOCRED sets it'],'SOW §3.3 DSA wallet & recharge model'],
+      refs:['DSA: referrals','Connectors submit leads themselves and track each one stage by stage, with the expected commission.',['Submit a lead with the form at the top','New referrals start at the New stage'],'SOW §3.3 Connector/DSA portal'],
+      payouts:['DSA: commissions & payouts','Commission earned, paid and available, plus a payout request that goes to FLOCRED Ops for approval.',['Tap Request payout to raise a request'],'SOW §3.3 Connector Payout module']
+    }
+  }
+};
+
+/* ---------------- render ---------------- */
+function render(){
+  const R = ROLES[S.role], scr = S.screen[S.role];
+  $('#roles').innerHTML = ROLE_ORDER.map(([k,l,i])=>`<button data-role="${k}" aria-pressed="${k===S.role}">${ic(i)}<span>${l}</span></button>`).join('');
+  $('#appbar').innerHTML = `<div class="avatar">${R.bar.init}</div><div class="who"><b>${R.bar.name}</b><span>${R.bar.sub}</span></div><span class="tag">Sample data</span>`;
+  $('#tabbar').innerHTML = R.tabs.map(([k,l,i])=>`<button data-tab="${k}" aria-current="${k===scr}">${ic(i)}${l}</button>`).join('');
+  const E = R.explain[scr];
+  $('#explain').innerHTML = `<h3>${E[0]}</h3><p>${E[1]}</p><ul>${E[2].map(x=>`<li>${x}</li>`).join('')}</ul><span class="ref">${E[3]}</span>`;
+  renderHint(E);
+  $('#screen').innerHTML = SCREENS[S.role][scr]();
+  tickCountdowns();
+}
+
+const stagePill = (st, lost) => lost ? `<span class="pill bad">Lost</span>` : st>=6 ? `<span class="pill good">${STAGES[st]}</span>` : st>=4 ? `<span class="pill info">${STAGES[st]}</span>` : `<span class="pill">${STAGES[st]}</span>`;
+
+const SCREENS = {
+field:{
+  today(){
+    const F=S.field, done=F.visits.filter(v=>v.status==='done').length, active=F.visits.find(v=>v.status==='active');
+    const vis = F.visits.map(v=>{
+      const cls = v.status==='done'?'done':v.status==='active'?'active':'';
+      let act='';
+      if(v.status==='planned') act = `<button class="btn btn-soft btn-sm" data-act="visit-in" data-id="${v.id}" ${active||F.checkedOut?'disabled':''}>${ic('pin')}Check in</button>`;
+      if(v.status==='active') act = `<button class="btn btn-primary btn-sm" data-act="visit-out" data-id="${v.id}">${ic('camera')}Check out</button>`;
+      const meta = v.status==='done' ? `<span class="pill good">${ic('check')}Done${v.out?' · '+v.out:''}</span>` : v.status==='active' ? `<span class="pill info">At location since ${v.in}</span>` : '';
+      return `<div class="tl ${cls}"><div class="time num">${v.t.replace(' ','<br>')}</div><div class="dot"></div><div class="body"><div class="row"><div class="grow"><div class="t" style="font-weight:600">${v.name}</div><div class="s muted">${v.area}</div></div>${act}</div>${meta?`<div style="margin-top:6px">${meta}</div>`:''}${v.note?`<div class="sub" style="margin-top:4px">${v.note}</div>`:''}</div></div>`;
+    }).join('');
+    return `
+    <div class="card"><div class="row"><div class="grow"><div class="muted">Attendance · ${todayStr()}</div>
+      <div style="font-weight:600;margin-top:2px">${F.checkedOut?'Checked out at '+F.checkedOut:'Checked in '+F.checkIn+' · Dwarka branch'}</div>
+      <div class="muted" style="display:flex;gap:5px;align-items:center;margin-top:3px">${ic('pin')}Geo-tagged · 28.5921° N, 77.0460° E</div></div>
+      <button class="btn btn-ghost btn-sm" data-act="day-out" ${F.checkedOut?'disabled':''}>${F.checkedOut?'Day closed':'End day'}</button></div></div>
+    <div class="kpis">
+      <div class="kpi"><b class="num">${F.calls.length}<span style="font-size:13px;color:var(--ink-3)">/${F.target.calls}</span></b><span>Calls</span></div>
+      <div class="kpi"><b class="num">${done}<span style="font-size:13px;color:var(--ink-3)">/${F.target.visits}</span></b><span>Visits</span></div>
+      <div class="kpi"><b class="num">${F.leads.filter(l=>!l.lost&&l.stage<6).length}</b><span>Open leads</span></div>
+    </div>
+    <div class="card"><div class="card-h"><h4>Today’s visit plan</h4><span class="muted">${done} of ${F.visits.length} done</span></div>
+      <div class="bar good" style="margin-bottom:14px"><i style="width:${done/F.visits.length*100}%"></i></div>
+      <div class="timeline">${vis}</div></div>
+    <div class="notice info">${ic('shield')}<span>Visit photos are deleted automatically 48 hours after capture. Location and screen-time tracking run only with your written consent.</span></div>`;
+  },
+  leads(){
+    const L=S.field.leads;
+    return `<div class="card"><div class="card-h"><h4>Assigned to you</h4><span class="muted">${L.length} leads</span></div><div class="list">
+      ${L.map(l=>`<button class="item" data-act="lead" data-id="${l.id}"><div class="avatar" style="width:34px;height:34px">${l.name.split(' ').map(w=>w[0]).slice(0,2).join('')}</div><div class="grow"><div class="t">${l.name}</div><div class="s">${l.product} · <span class="num">${lakh(l.amt)}</span> · ${l.area}</div></div>${stagePill(l.stage,l.lost)}</button>`).join('')}
+    </div></div>
+    <div class="notice info">${ic('bell')}<span>New leads assigned to you arrive as push notifications, with the source attached (WhatsApp, website, connector or campaign).</span></div>`;
+  },
+  calls(){
+    const F=S.field;
+    return `<div class="card"><div class="card-h"><h4>Calls today</h4><span class="muted num">${F.calls.length} of ${F.target.calls} target</span></div>
+      <div class="bar"><i style="width:${Math.min(100,F.calls.length/F.target.calls*100)}%"></i></div></div>
+    <div class="card"><div class="list">${F.calls.map(c=>{
+      const cls = c.out.startsWith('Connected')?'good':c.out==='Call back'?'info':c.out==='Not reachable'?'warn':'bad';
+      return `<div class="item"><div class="avatar" style="width:34px;height:34px">${ic('phone')}</div><div class="grow"><div class="t">${c.who}</div><div class="s num">${c.t} · ${c.dur}</div></div><span class="pill ${cls}">${c.out}</span></div>`;}).join('')}</div></div>`;
+  }
+},
+ops:{
+  pipeline(){
+    const f={All:1,'Delhi West':.26,'Noida':.19,'Gurgaon':.22,'Jaipur':.08}[S.ops.zone];
+    const base=[412,318,204,151,112,74,58], tat=[0.4,1.2,2.1,3.5,4.8,2.2];
+    const v=base.map(b=>Math.max(1,Math.round(b*f)));
+    const rows=STAGES.slice(0,7).map((s,i)=>{
+      const conv = i? Math.round(v[i]/v[i-1]*100)+'% from previous' : 'all new leads';
+      return `<div class="f-row"><span class="lbl">${s}</span><span class="val num">${v[i]}</span><div class="bar ${i===6?'good':''}"><i style="width:${v[i]/v[0]*100}%"></i></div><span class="muted num" style="grid-column:1/-1">${conv}${i<6?' · avg '+tat[i]+' days in stage':''}</span></div>`;
+    }).join('');
+    const reasons=[['Low CIBIL',38,'var(--bad)'],['Not reachable',24,'var(--warn)'],['Docs pending',19,'var(--accent)'],['Rate mismatch',11,'var(--good)'],['Other',8,'var(--ink-3)']];
+    const disb = Math.round(v[6]*9.4);
+    return `<div class="chips">${['All','Delhi West','Noida','Gurgaon','Jaipur'].map(z=>`<button class="chip" data-act="zone" data-z="${z}" aria-pressed="${z===S.ops.zone}">${z}</button>`).join('')}</div>
+    <div class="kpis">
+      <div class="kpi"><b class="num">${v[0]}</b><span>New leads</span></div>
+      <div class="kpi"><b class="num">${Math.round(v[6]/v[0]*1000)/10}%</b><span>Lead → disbursal</span></div>
+      <div class="kpi"><b class="num">₹${disb>=100?(disb/100).toFixed(1)+' Cr':disb+' L'}</b><span>Disbursed</span></div>
+    </div>
+    <div class="card funnel"><div class="card-h"><h4>Conversion funnel</h4><span class="muted">Last 30 days</span></div>${rows}</div>
+    <div class="card"><div class="card-h"><h4>Why leads are lost</h4><span class="muted">Reason codes</span></div>
+      <div class="stack">${reasons.map(r=>`<span style="width:${r[1]}%;background:${r[2]}"></span>`).join('')}</div>
+      <div class="legend">${reasons.map(r=>`<span><i style="background:${r[2]}"></i>${r[0]} <b class="num">${r[1]}%</b></span>`).join('')}</div></div>`;
+  },
+  allot(){
+    const O=S.ops, pending=O.queue.filter(q=>!q.to).length;
+    const emp = id => O.employees.find(e=>e.id===id);
+    return `<div class="card"><div class="row"><div class="grow"><div style="font-weight:600">Unassigned queue</div><div class="muted">${pending} waiting · allots by zone and workload</div></div>
+      ${pending?`<button class="btn btn-primary btn-sm" data-act="autoallot">${ic('shuffle')}Auto-allot</button>`:`<button class="btn btn-ghost btn-sm" data-act="reset-allot">Reset</button>`}</div>
+      <div class="list" style="margin-top:8px">${O.queue.map(q=>`<button class="item" data-act="reassign" data-id="${q.id}"><div class="grow"><div class="t">${q.name}</div><div class="s">${q.product} · <span class="num">${lakh(q.amt)}</span> · ${q.zone} · ${q.src}</div></div>${q.to?`<span class="pill good">→ ${emp(q.to).name.split(' ')[0]}</span>`:`<span class="pill warn">Waiting</span>`}</button>`).join('')}</div></div>
+    <div class="card"><div class="card-h"><h4>Team workload</h4><span class="muted">Today vs daily limit</span></div><div class="list">
+      ${O.employees.map(e=>{const p=e.load/e.max, c=p>=.9?'bad':p>=.75?'warn':'good';return `<div class="item" style="display:grid;gap:6px"><div class="row"><div class="grow"><div class="t">${e.name}</div><div class="s">${e.zone}</div></div><span class="num sub">${e.load}/${e.max}</span></div><div class="bar ${c}"><i style="width:${p*100}%"></i></div></div>`}).join('')}
+    </div></div>`;
+  },
+  match(){
+    const L=MATCH_LEADS[S.ops.matchLead], M=matchLenders(L), ref=S.ops.referred[S.ops.matchLead];
+    return `<div class="chips">${MATCH_LEADS.map((l,i)=>`<button class="chip" data-act="mlead" data-i="${i}" aria-pressed="${i===S.ops.matchLead}">${l.name}</button>`).join('')}</div>
+    <div class="card"><div class="muted">Ready for lender referral</div><div style="font-weight:600;font-size:17px;margin-top:2px">${L.name}</div>
+      <div class="kpis" style="margin-top:10px"><div class="kpi"><b style="font-size:15px">${L.product}</b><span>Product</span></div><div class="kpi"><b class="num" style="font-size:15px">${lakh(L.amt)}</b><span>Amount</span></div><div class="kpi"><b class="num" style="font-size:15px">${L.band}</b><span>CIBIL band</span></div></div>
+      <div class="muted" style="margin-top:8px">${L.area} · ${L.vintage}</div></div>
+    <div class="card"><div class="card-h"><h4>${ic('spark')} ARIA lender ranking</h4><span class="muted">${M.ok.length} eligible</span></div><div class="list">
+      ${M.ok.map((x,i)=>`<div class="item" style="align-items:flex-start"><div class="grow"><div class="t">${i===0?'<span class="pill info" style="margin-right:6px">Best match</span>':''}${x.n}</div><div class="reasons">${x.reasons.map(r=>`<span class="pill">${r}</span>`).join('')}</div><div class="bar" style="margin-top:8px"><i style="width:${x.score}%"></i></div></div><div class="score num">${x.score}</div></div>`).join('')}
+    </div>
+    ${M.ok.length?(ref?`<div class="notice info" style="margin-top:10px">${ic('check')}<span>Referred to ${ref}. Ops approval logged at ${clock(new Date())}.</span></div>`:`<button class="btn btn-primary" style="width:100%;margin-top:12px" data-act="refer" data-n="${M.ok[0].n}">Approve & refer to ${M.ok[0].n}</button>`):''}</div>
+    ${M.out.length?`<div class="card"><div class="card-h"><h4>Not eligible</h4><span class="muted">${M.out.length} lenders</span></div><div class="list">${M.out.map(x=>`<div class="item"><div class="grow"><div class="t" style="font-weight:500">${x.n}</div></div><span class="pill bad">${x.why}</span></div>`).join('')}</div></div>`:''}
+    <div class="muted">Lender names and policies are placeholders. The real matrix comes from FLOCRED’s 50+ lender network.</div>`;
+  },
+  dsr(){
+    const D=S.ops.dsr, f=S.ops.dsrFilter;
+    const today=D.filter(d=>d.ago<24).length, ver=D.filter(d=>d.status==='Verified').length, pend=D.length-ver, exp=D.filter(d=>48-d.ago-(Date.now()-now)/H<6).length;
+    const shown=D.filter(d=>f==='All'||(f==='Pending'?d.status!=='Verified':d.status==='Verified'));
+    const groups=[...new Set(shown.map(d=>d.emp))];
+    return `<div class="kpis four">
+      <div class="kpi"><b class="num">${today}</b><span>Visits today</span></div>
+      <div class="kpi"><b class="num" style="color:var(--good)">${ver}</b><span>Verified</span></div>
+      <div class="kpi"><b class="num" style="color:var(--warn)">${pend}</b><span>Pending verification</span></div>
+      <div class="kpi alert"><b class="num">${exp}</b><span>Expiring in &lt;6h</span></div></div>
+    <div class="chips">${['All','Pending','Verified'].map(x=>`<button class="chip" data-act="dsrf" data-f="${x}" aria-pressed="${x===f}">${x}</button>`).join('')}</div>
+    ${groups.length?groups.map(g=>{const vs=shown.filter(d=>d.emp===g).sort((a,b)=>a.ago-b.ago);return `<div class="card emp-group"><div class="emp-head"><div class="avatar" style="width:32px;height:32px">${g.split(' ').map(w=>w[0]).join('')}</div><div class="grow" style="min-width:0"><div style="font-weight:600">${g}</div><div class="muted">${vs.length} visit${vs.length>1?'s':''} · last 48h</div></div><button class="btn btn-ghost btn-sm" data-act="trail" data-emp="${g}">${ic('route')}8-hour trail</button></div>
+      <div class="list">${vs.map(d=>`<button class="item" data-act="dsr" data-id="${d.id}"><div class="grow"><div class="t">${d.shop}</div><div class="s num">${d.phone} · ${d.area} · ${clock(new Date(now-d.ago*H))}</div><div class="countdown" data-purge="${now-d.ago*H+48*H}"></div></div><span class="pill ${d.status==='Verified'?'good':d.status==='Called'?'info':''}">${d.status}</span></button>`).join('')}</div></div>`}).join(''):`<div class="card muted">No visits match this filter.</div>`}`;
+  }
+},
+dsa:{
+  wallet(){
+    const W=S.dsa, bal=W.events.reduce((a,e)=>a+e.amt,0);
+    let run=0; const rows=W.events.map(e=>({...e,after:(run+=e.amt)})).reverse();
+    const low = bal < 200;
+    return `<div class="card"><div class="muted">Wallet balance</div><div class="big-money num" style="color:${low?'var(--bad)':'var(--ink)'}">${inr(bal)}</div>
+      <div class="muted">About ${Math.floor(bal/W.price)} lead unlocks at ${inr(W.price)} each (sample price)</div>
+      <div class="row" style="margin-top:12px;gap:8px"><button class="btn btn-primary" style="flex:1" data-act="recharge">${ic('plus')}Recharge</button></div></div>
+    ${low?`<div class="notice">${ic('bell')}<span>Low balance. Recharge to keep unlocking leads.</span></div>`:''}
+    <div class="card"><div class="card-h"><h4>Leads near Janakpuri</h4><span class="muted">Free to view, pay to unlock</span></div><div class="list">
+      ${W.market.map(m=>`<div class="item"><div class="grow"><div class="t">${m.unlocked?m.name:m.name.replace(/\S+$/,'•••')}</div><div class="s">${m.product} · <span class="num">${lakh(m.amt)}</span> · CIBIL ${m.cibil}</div>${m.unlocked?`<div class="s num" style="color:var(--good)">${m.phone} · ${m.area}</div>`:''}</div>${m.unlocked?`<span class="pill good">Unlocked</span>`:`<button class="btn btn-soft btn-sm" data-act="unlock" data-id="${m.id}">Unlock ${inr(W.price)}</button>`}</div>`).join('')}
+    </div></div>
+    <div class="card"><div class="card-h"><h4>Transaction ledger</h4><span class="muted">${rows.length} entries</span></div><div class="list">
+      ${rows.map(r=>`<div class="item"><div class="grow"><div class="t" style="font-weight:500">${r.type}</div><div class="s num">${r.date} · balance after ${inr(r.after)}</div></div><span class="num" style="font-weight:600;color:${r.amt>0?'var(--good)':'var(--ink)'}">${r.amt>0?'+':'−'}${inr(Math.abs(r.amt))}</span></div>`).join('')}
+    </div></div>`;
+  },
+  refs(){
+    const R=S.dsa.referrals;
+    return `<details class="card" id="refform" ${S.dsa.formOpen?'open':''}><summary style="cursor:pointer;font-weight:600;display:flex;align-items:center;gap:8px;list-style:none">${ic('plus')}Submit a new lead</summary>
+      <form class="form-grid" id="leadform" style="margin-top:12px" novalidate>
+        <div class="field"><label for="lf-name">Borrower name</label><input id="lf-name" autocomplete="off" placeholder="e.g. Rajesh Kumar"></div>
+        <div class="field"><label for="lf-phone">Mobile number</label><input id="lf-phone" inputmode="numeric" maxlength="10" autocomplete="off" placeholder="10-digit number"></div>
+        <div class="field"><label for="lf-prod">Product</label><select id="lf-prod"><option>Business Loan</option><option>Personal Loan</option><option>Home Loan</option><option>Loan Against Property</option></select></div>
+        <div class="field"><label for="lf-amt">Loan amount (₹)</label><input id="lf-amt" inputmode="numeric" autocomplete="off" placeholder="e.g. 500000"></div>
+        <div class="err" id="lf-err" hidden></div>
+        <button class="btn btn-primary" type="submit">Submit lead</button>
+        <span class="muted">Demo only. Nothing leaves this page.</span>
+      </form></details>
+    <div class="card"><div class="card-h"><h4>Your referrals</h4><span class="muted">${R.length} leads</span></div><div class="list">
+      ${R.map(r=>`<div class="item" style="display:grid;gap:7px"><div class="row"><div class="grow"><div class="t">${esc(r.name)}</div><div class="s">${r.product} · <span class="num">${lakh(r.amt)}</span>${r.phone?' · '+r.phone:''}</div></div>${stagePill(r.stage,r.lost)}</div>
+        <div class="stepper">${STAGES.map((_,i)=>`<i class="${!r.lost&&i<=r.stage?'on':''}"></i>`).join('')}</div>
+        <div class="muted">${r.lost?'Closed · '+r.lost:r.stage>=6?'Commission earned '+inr(r.comm):'Expected commission '+inr(r.comm||Math.round(r.amt*.01))}</div></div>`).join('')}
+    </div></div>`;
+  },
+  payouts(){
+    const P=S.dsa, paid=P.payouts.filter(p=>p.status==='Paid').reduce((a,p)=>a+p.amt,0), pend=P.payouts.filter(p=>p.status!=='Paid').reduce((a,p)=>a+p.amt,0), avail=P.earned-paid-pend;
+    return `<div class="kpis"><div class="kpi"><b class="num" style="font-size:17px">${inr(P.earned)}</b><span>Earned</span></div><div class="kpi"><b class="num" style="font-size:17px">${inr(paid)}</b><span>Paid out</span></div><div class="kpi"><b class="num" style="font-size:17px;color:var(--good)">${inr(avail)}</b><span>Available</span></div></div>
+    <button class="btn btn-primary" data-act="payout" ${avail<=0?'disabled':''}>${ic('cash')}${avail>0?'Request payout of '+inr(avail):'No balance to withdraw'}</button>
+    <div class="card"><div class="card-h"><h4>Payout history</h4></div><div class="list">
+      ${P.payouts.map(p=>`<div class="item"><div class="grow"><div class="t num">${p.id} · ${inr(p.amt)}</div><div class="s">${p.date}</div></div><span class="pill ${p.status==='Paid'?'good':'warn'}">${p.status}</span></div>`).join('')}
+    </div></div>
+    <div class="card"><div class="card-h"><h4>Your performance</h4><span class="muted">Since joining</span></div>
+      <div class="kpis"><div class="kpi"><b class="num">${P.referrals.length}</b><span>Referred</span></div><div class="kpi"><b class="num">${P.referrals.filter(r=>r.stage>=6&&!r.lost).length}</b><span>Disbursed</span></div><div class="kpi"><b class="num">${Math.round(P.referrals.filter(r=>r.stage>=6&&!r.lost).length/P.referrals.length*100)}%</b><span>Conversion</span></div></div></div>`;
+  }
+}
+};
+
+function tickCountdowns(){
+  document.querySelectorAll('[data-purge]').forEach(el=>{
+    const ms = +el.dataset.purge - Date.now();
+    if(ms<=0){ el.textContent='Photo purged · name, number and location kept'; el.style.color='var(--ink-3)'; return; }
+    const h=Math.floor(ms/H), m=Math.floor(ms%H/60e3);
+    el.innerHTML = `${ic('clock')} Photo deletes in ${h}h ${pad(m)}m`;
+    el.style.color = h<6 ? 'var(--bad)' : 'var(--ink-3)';
+    el.style.display='flex'; el.style.alignItems='center'; el.style.gap='4px'; el.style.marginTop='3px';
+  });
+}
+setInterval(tickCountdowns, 30000);
+
+/* ---------------- sheets ---------------- */
+function leadSheet(id){
+  const l=S.field.leads.find(x=>x.id===id);
+  const next = !l.lost && l.stage<7 ? STAGES[l.stage+1] : null;
+  openSheet(`<div><div class="muted">${l.src}</div><h3>${l.name}</h3><div class="sub">${l.product} · <span class="num">${lakh(l.amt)}</span> · ${l.area} · <span class="num">${l.phone}</span></div></div>
+    <div><div class="row" style="margin-bottom:6px"><span class="grow sub">${l.lost?'Closed as lost · '+l.lost:'Stage '+(l.stage+1)+' of 8 · '+STAGES[l.stage]}</span></div><div class="stepper">${STAGES.map((_,i)=>`<i class="${!l.lost&&i<=l.stage?'on':''}"></i>`).join('')}</div></div>
+    ${l.lost?'':`<div><div style="font-weight:600;margin-bottom:8px">Log a call</div><div class="opt-grid">
+      ${[['Connected · interested','4m 10s'],['Call back','1m 02s'],['Not reachable','0m 00s'],['Not interested','0m 40s']].map(o=>`<button class="opt" data-sheet="call" data-o="${o[0]}" data-d="${o[1]}">${o[0]}</button>`).join('')}</div></div>
+    ${next?`<button class="btn btn-primary" data-sheet="next">Move to ${next}</button>`:''}
+    <details><summary class="sub" style="cursor:pointer">Mark as lost</summary><div class="opt-grid" style="margin-top:8px">${LOST_REASONS.map(r=>`<button class="opt" data-sheet="lost" data-r="${r}">${r}</button>`).join('')}</div></details>`}
+    <button class="btn btn-ghost" data-sheet="close">Close</button>`);
+  sheetEl.addEventListener('click', e=>{
+    const b=e.target.closest('[data-sheet]'); if(!b) return; const a=b.dataset.sheet;
+    if(a==='call'){ S.field.calls.unshift({t:clock(new Date()),who:l.name,out:b.dataset.o,dur:b.dataset.d}); if(l.stage===0 && b.dataset.o.startsWith('Connected')) l.stage=1; toast('Call logged · '+b.dataset.o); }
+    if(a==='next'){ l.stage++; toast(l.name+' moved to '+STAGES[l.stage]); }
+    if(a==='lost'){ l.lost=b.dataset.r; toast('Closed as lost · '+l.lost); }
+    closeSheet(); render();
+  });
+}
+function reassignSheet(id){
+  const q=S.ops.queue.find(x=>x.id===id), E=S.ops.employees;
+  openSheet(`<div><div class="muted">${q.zone} · ${q.src}</div><h3>Assign ${q.name}</h3><div class="sub">${q.product} · <span class="num">${lakh(q.amt)}</span></div></div>
+    <div class="list">${E.map(e=>`<button class="item" data-sheet="as" data-e="${e.id}" ${e.load>=e.max&&q.to!==e.id?'disabled':''}><div class="grow"><div class="t">${e.name}${q.to===e.id?' · current':''}</div><div class="s">${e.zone}${e.zone===q.zone?' · same zone':''}</div></div><span class="num sub">${e.load}/${e.max}</span></button>`).join('')}</div>
+    <button class="btn btn-ghost" data-sheet="close">Cancel</button>`);
+  sheetEl.addEventListener('click', e=>{
+    const b=e.target.closest('[data-sheet]'); if(!b) return;
+    if(b.dataset.sheet==='as'){ const to=E.find(x=>x.id===b.dataset.e); if(q.to===to.id){closeSheet();return;} if(q.to){E.find(x=>x.id===q.to).load--;} q.to=to.id; to.load++; toast(q.name+' assigned to '+to.name+' (manual override)'); }
+    closeSheet(); render();
+  });
+}
+function dsrSheet(id){
+  const d=S.ops.dsr.find(x=>x.id===id);
+  openSheet(`<div><div class="muted">${d.emp} · ${clock(new Date(now-d.ago*H))}</div><h3>${d.shop}</h3></div>
+    <div class="mini-map">${mapSVG([{x:d.x,y:d.y,label:d.shop}])}</div>
+    <div class="kpis"><div class="kpi"><b style="font-size:14px">${d.shop}</b><span>Saved name</span></div><div class="kpi"><b class="num" style="font-size:14px">${d.phone}</b><span>Number</span></div><div class="kpi"><b style="font-size:14px">${d.area}</b><span>Location</span></div></div>
+    <div class="notice">${ic('shield')}<div><b>Data retention</b><br>Only name, number and location are kept long-term. The photo is deleted automatically 48 hours after capture.<div class="countdown" data-purge="${now-d.ago*H+48*H}"></div></div></div>
+    ${d.status==='Verified'?`<span class="pill good" style="justify-self:start">${ic('check')}Verified</span>`:`<button class="btn btn-primary" data-sheet="verify">${ic('check')}Mark verified</button>`}
+    <button class="btn btn-ghost" data-sheet="close">Close</button>`);
+  tickCountdowns();
+  sheetEl.addEventListener('click', e=>{
+    const b=e.target.closest('[data-sheet]'); if(!b) return;
+    if(b.dataset.sheet==='verify'){ d.status='Verified'; toast(d.shop+' verified'); }
+    closeSheet(); render();
+  });
+}
+const TRAILS = {
+  'Rahul Verma':[['9:30 AM','Started at Dwarka branch','Branch'],['10:05 AM','Sharma Electronics, Dwarka Sec 6','25 min visit'],['10:55 AM','Break','15 min'],['11:30 AM','Gupta Medical Store, Dwarka Sec 10','35 min visit'],['12:20 PM','Kumar Hardware, Dwarka Sec 12','20 min visit'],['1:05 PM','On the way to Uttam Nagar','En route now']],
+  'Imran Ali':[['9:45 AM','Started at Noida branch','Branch'],['10:30 AM','City Mobile Hub, Noida Sec 18','30 min visit'],['11:20 AM','Patel Opticals, Noida Sec 18','15 min visit'],['12:10 PM','Lunch','30 min'],['1:00 PM','Shree Ganesh Kirana, Noida Sec 27','At location now']],
+  'Deepak Yadav':[['9:20 AM','Started at Gurgaon branch','Branch'],['10:00 AM','Cyber Print Studio, Sohna Road','40 min visit'],['11:10 AM','Break','10 min'],['11:45 AM','Haryana Tyres, Sector 14','25 min visit'],['12:30 PM','On the way to Sector 29','En route now']]
+};
+function trailSheet(emp){
+  const T=TRAILS[emp]||[];
+  const pts=T.filter(t=>/visit|now/.test(t[2])).map((t,i)=>({x:18+i*18,y:i%2?36:62}));
+  openSheet(`<div><div class="muted">8-hour movement history · today</div><h3>${emp}</h3></div>
+    <div class="mini-map">${mapSVG(pts,true)}</div>
+    <div class="timeline">${T.map((t,i)=>`<div class="tl ${i===T.length-1?'active':'done'}"><div class="time num">${t[0].replace(' ','<br>')}</div><div class="dot"></div><div class="body"><div style="font-weight:600;font-size:14.5px">${t[1]}</div><div class="muted">${t[2]}</div></div></div>`).join('')}</div>
+    <button class="btn btn-ghost" data-sheet="close">Close</button>`);
+  sheetEl.addEventListener('click', e=>{ if(e.target.closest('[data-sheet]')) closeSheet(); });
+}
+function mapSVG(pts, path){
+  const P = pts.map(p=>[p.x*3.6, p.y*1.8]);
+  return `<svg viewBox="0 0 360 180" role="img" aria-label="Map preview">
+    <rect width="360" height="180" fill="var(--surface-2)"/>
+    <g stroke="var(--line)" stroke-width="10" fill="none" stroke-linecap="round"><path d="M-10 120 C 80 100, 140 150, 370 90"/><path d="M120 -10 L 150 190"/><path d="M260 -10 C 240 60, 300 120, 280 190"/></g>
+    <g stroke="var(--surface)" stroke-width="2" fill="none"><path d="M-10 120 C 80 100, 140 150, 370 90"/><path d="M120 -10 L 150 190"/><path d="M260 -10 C 240 60, 300 120, 280 190"/></g>
+    <path d="M10 20 h60 v40 h-60z M200 20 h40 v30 h-40z M300 130 h50 v40 h-50z" fill="var(--line)" opacity=".5"/>
+    ${path&&P.length>1?`<polyline points="${P.map(p=>p.join(',')).join(' ')}" fill="none" stroke="var(--accent)" stroke-width="3" stroke-dasharray="6 5" stroke-linecap="round"/>`:''}
+    ${P.map((p,i)=>`<g transform="translate(${p[0]},${p[1]})"><circle r="${path?7:10}" fill="${path&&i===P.length-1?'var(--accent)':path?'var(--good)':'var(--accent)'}" stroke="var(--surface)" stroke-width="3"/>${path?`<text y="3.5" text-anchor="middle" font-size="9" font-weight="700" fill="var(--on-accent)">${i+1}</text>`:''}</g>`).join('')}
+  </svg>`;
+}
+function rechargeSheet(){
+  let pick=1000;
+  const draw=()=>`<div><h3>Recharge wallet</h3><div class="sub">Access stays free. You only pay for what you use.</div></div>
+    <div class="opt-grid">${[500,1000,2000,5000].map(a=>`<button class="opt num" data-sheet="amt" data-a="${a}" aria-pressed="${a===pick}">${inr(a)}<small>${Math.floor(a/S.dsa.price)} unlocks</small></button>`).join('')}</div>
+    <button class="btn btn-primary" data-sheet="pay">Pay ${inr(pick)} (demo)</button>
+    <span class="muted">In the live app this opens the payment gateway (UPI, cards, net banking).</span>
+    <button class="btn btn-ghost" data-sheet="close">Cancel</button>`;
+  openSheet(draw());
+  const sh=sheetEl.querySelector('.sheet');
+  sheetEl.addEventListener('click', e=>{
+    const b=e.target.closest('[data-sheet]'); if(!b) return;
+    if(b.dataset.sheet==='amt'){ pick=+b.dataset.a; sh.innerHTML='<div class="grab"></div>'+draw(); return; }
+    if(b.dataset.sheet==='pay'){ S.dsa.events.push({type:'Recharge · UPI',amt:pick,date:todayStr(),status:'Success'}); toast(inr(pick)+' added to wallet'); }
+    closeSheet(); render();
+  });
+}
+
+/* ---------------- events ---------------- */
+document.querySelector('.roles').addEventListener('click', e=>{
+  const b=e.target.closest('[data-role]'); if(!b) return; S.role=b.dataset.role; render();
+});
+$('#tabbar').addEventListener('click', e=>{
+  const b=e.target.closest('[data-tab]'); if(!b) return; S.screen[S.role]=b.dataset.tab; render();
+  const d=$('#device').getBoundingClientRect(); if(d.top<0) window.scrollBy({top:d.top-80, behavior:'smooth'});
+});
+$('#screen').addEventListener('click', e=>{
+  const b=e.target.closest('[data-act]'); if(!b || b.disabled) return; const a=b.dataset.act, F=S.field, O=S.ops;
+  if(EXTRA[a]){ if(EXTRA[a](b)!==false) render(); return; }
+  if(a==='visit-in'){ const v=F.visits.find(x=>x.id==b.dataset.id); v.status='active'; v.in=clock(new Date()); toast('Checked in at '+v.name+' · location tagged'); }
+  if(a==='visit-out'){ const v=F.visits.find(x=>x.id==b.dataset.id); v.status='done'; v.out=clock(new Date()); v.note='Shop photo captured · deletes in 48h'; toast('Visit complete · '+v.name); }
+  if(a==='day-out'){ F.visits.forEach(v=>{ if(v.status==='active'){v.status='done'; v.out=clock(new Date());} }); F.checkedOut=clock(new Date()); toast('Day closed · attendance synced to HRMS'); }
+  if(a==='lead') return leadSheet(+b.dataset.id);
+  if(a==='zone'){ O.zone=b.dataset.z; }
+  if(a==='autoallot'){
+    let n=0; O.queue.filter(q=>!q.to).forEach(q=>{
+      const c=O.employees.filter(x=>x.zone===q.zone && x.load<x.max).sort((x,y)=>x.load/x.max - y.load/y.max)[0];
+      if(c){ q.to=c.id; c.load++; n++; }
+    });
+    toast(n+' leads allotted by zone and workload');
+  }
+  if(a==='reset-allot'){ const f=freshState(); O.queue=f.ops.queue; O.employees=f.ops.employees; }
+  if(a==='reassign') return reassignSheet(b.dataset.id);
+  if(a==='mlead'){ O.matchLead=+b.dataset.i; }
+  if(a==='refer'){ O.referred[O.matchLead]=b.dataset.n; toast('Lead referred to '+b.dataset.n); }
+  if(a==='dsrf'){ O.dsrFilter=b.dataset.f; }
+  if(a==='dsr') return dsrSheet(b.dataset.id);
+  if(a==='trail') return trailSheet(b.dataset.emp);
+  if(a==='recharge') return rechargeSheet();
+  if(a==='unlock'){
+    const W=S.dsa, bal=W.events.reduce((s,x)=>s+x.amt,0), m=W.market.find(x=>x.id===b.dataset.id);
+    if(bal<W.price){ toast('Not enough balance. Recharge to unlock.'); return rechargeSheet(); }
+    m.unlocked=true; W.events.push({type:'Lead unlock · '+m.product,amt:-W.price,date:todayStr(),status:'Success'}); toast(inr(W.price)+' deducted · lead unlocked');
+  }
+  if(a==='payout'){
+    const P=S.dsa, paid=P.payouts.reduce((s,p)=>s+p.amt,0), avail=P.earned-paid;
+    P.payouts.unshift({id:'P-'+(1043+P.payouts.length),amt:avail,date:todayStr(),status:'Pending approval'}); toast('Payout request sent to FLOCRED Ops');
+  }
+  render();
+});
+$('#screen').addEventListener('toggle', e=>{ if(e.target.id==='refform') S.dsa.formOpen=e.target.open; }, true);
+$('#screen').addEventListener('submit', e=>{
+  if(e.target.id!=='leadform') return; e.preventDefault();
+  const name=$('#lf-name').value.trim(), ph=$('#lf-phone').value.replace(/\D/g,''), prod=$('#lf-prod').value, amt=+$('#lf-amt').value.replace(/\D/g,'');
+  const err=$('#lf-err'); let msg='';
+  if(name.length<2) msg='Enter the borrower’s name.'; else if(ph.length!==10) msg='Enter a 10-digit mobile number.'; else if(!amt||amt<10000) msg='Enter a loan amount of at least ₹10,000.';
+  if(msg){ err.textContent=msg; err.hidden=false; return; }
+  S.dsa.referrals.unshift({name, product:prod, amt, stage:0, comm:Math.round(amt*.01), phone:ph.slice(0,2)+'•••••'+ph.slice(7)});
+  S.dsa.formOpen=false; toast('Lead submitted · Ops will assign it shortly'); render();
+});
+
+/* ---------------- static sections ---------------- */
+const MODS = [
+  ['Public website v2','§3.1 · §3.4',['Rebuilt on Next.js with the existing Sora / DM Sans and navy-and-blue brand system','SEO page structure for loan categories and 30+ Delhi NCR city pages, keeping current search rankings','ARIA chat on all key pages; EMI calculator, CIBIL simulator and DSA eligibility forms carried over','GTM and Meta Pixel tracking kept and extended'],['cust','emi']],
+  ['Backend & integrations','§3.2',['One API serving the website, CRM and both mobile apps','Supabase Postgres with row-level security for all six roles','Lead intake from web forms, WhatsApp (WATI), call centre and connector referrals into one lead store','Document workflow for KYC, CIBIL reports and sanction letters','Staging and production environments with CI/CD on Vercel and Supabase'],null],
+  ['DSA / lead CRM','§3.3',['Duplicate detection and auto-assignment by zone and product','Lead Allotment against each executive’s workload and daily limit, with manual override','8-stage pipeline from new to closed, with reason codes at every drop-off','Lender partner management across the 50+ lender network','Funnel, turnaround time, zone and product reports'],['ops','pipeline']],
+  ['Connector & DSA portal + wallet','§3.3',['Self-service sign-up with KYC upload','Submit leads, track them stage by stage, download statements','Admin approval, commission set-up per connector, payout requests and history','Free access with a prepaid wallet, per-use charges, low-balance alerts and a full ledger'],['dsa','wallet']],
+  ['Campaign management','§3.5',['Campaigns on WhatsApp, SMS, email, landing pages and paid social or search','Audience segments from CRM data: product interest, zone, funnel stage','Every lead tagged to the campaign that brought it in','Cost per lead and conversion by campaign; template library with approvals'],['ops','camp']],
+  ['HRMS','§3.6',['Employee records, onboarding and offboarding for 10 team leads and 40 field executives across 10 zones','Attendance and leave, with field check-in from the mobile app','Employee documents, offer letters and HR records','Payroll-ready export and performance linked to CRM and field data'],['tl','approvals']],
+  ['Field sales tracking','§3.7',['Call logs with duration and outcome, linked to each lead','Daily task list and activity timeline per executive and team','Visit plans, geo-tagged check-in and check-out, planned vs actual, beat planning','Live and offline location with sync on reconnect; screen-time tracking only with consent','Alerts to team leads for missed visits and low activity'],['field','calls']],
+  ['DSR visit verification','§3.7',['Counters for visits today, verified, pending and expiring in under 6 hours','Visit feed grouped by executive, with masked numbers and a countdown to photo deletion','8-hour movement trail per executive','Photos deleted by the server after 48 hours, not just hidden in the app'],['ops','dsr']],
+  ['Android & iOS apps','§3.8',['For field sales executives and team leads (React Native or Flutter, decided at design stage)','Assigned leads, call logging, visit planning, tasks, attendance and notifications','Works offline in low-network areas and syncs when back online','Push notifications; Play Store and App Store submission handled'],['field','today']],
+  ['AI & automation suite','§3.9',['AI Lead Scraper from Google Maps, LinkedIn, JustDial, Sulekha and Apollo.io, by city and category','Credit Engine feeding CIBIL band and eligibility into lender matching','AI Blog Generator with auto-publish and IndexNow ping for city SEO pages','Live Rate Manager: update a rate once and it shows on the website and in ARIA','AI Lender Matching with a match score for Ops to approve'],['ops','match']]
+];
+$('#modlist').innerHTML = MODS.map((m,i)=>`<details class="mod" ${i<1?'open':''}><summary><h3>${m[0]}</h3><span class="muted">SOW ${m[1]}</span><span class="chev">${ic('chev')}</span></summary><div class="mod-body"><ul>${m[2].map(x=>`<li>${x}</li>`).join('')}</ul>${m[3]?`<button class="btn btn-soft btn-sm" data-go="${m[3][0]}:${m[3][1]}">See it in the demo</button>`:''}</div></details>`).join('');
+$('#modlist').addEventListener('click', e=>{
+  const b=e.target.closest('[data-go]'); if(!b) return; const [r,s]=b.dataset.go.split(':');
+  S.role=r; S.screen[r]=s; render(); document.getElementById('demo').scrollIntoView({behavior:'smooth'});
+});
+
+const PHASES = [
+  [1,'Discovery, architecture, UI/UX','Web + mobile design',0,2,3,false],
+  [2,'Website rebuild','Frontend + backend, from flocred.com',3,4,6,false],
+  [3,'CRM, connector module, campaigns','DSA CRM + portal + campaigns',9,6,8,false],
+  [6,'AI & automation, lead allotment','Parallel to Phase 3',9,3,5,true],
+  [7,'Android + iOS apps','Parallel to backend work',13,6,8,true],
+  [4,'HRMS','Attendance, leave, documents',17,3,4,false],
+  [5,'Field tracking + DSR','Calls, activity, visits, verification',21,5,6,false],
+  [8,'Testing, UAT, launch','Integration, bug-fixing, deployment',27,2,3,false]
+];
+const SPAN=30, pct=w=>w/SPAN*100;
+$('#gantt').innerHTML = `<div class="g-key"><span><i style="background:var(--accent)"></i>Main track</span><span><i style="background:var(--good)"></i>Runs in parallel</span><span><i style="background:var(--accent);opacity:.35"></i>Longer estimate</span></div>
+  <div class="g-axis"><span></span><div class="ticks num">${[0,5,10,15,20,25,30].map(w=>`<span style="left:${pct(w)}%">${w===0?'Week 0':'Wk '+w}</span>`).join('')}</div></div>
+  ${PHASES.map(p=>`<div class="g-row"><div class="g-label"><b>Phase ${p[0]} · ${p[1]}</b><span>${p[2]}</span></div><div class="g-track" role="img" aria-label="Phase ${p[0]}: ${p[4]} to ${p[5]} weeks"><span class="g-ext ${p[6]?'par':''}" style="left:${pct(p[3]+p[4])}%;width:${pct(p[5]-p[4])}%"></span><span class="g-bar ${p[6]?'par':''}" style="left:${pct(p[3])}%;width:${pct(p[4])}%">${p[4]}–${p[5]} wk</span></div></div>`).join('')}`;
+
+const DELIV = ['v2 public website: responsive, SEO-structured, with ARIA','Backend platform (API + database) for web and mobile','DSA / lead CRM (web) with role-based access','Connector/DSA portal plus connector management and payouts','DSA wallet: free access, prepaid balance, per-use billing, ledger','Campaign management with multi-channel dispatch and attribution','HRMS: onboarding, attendance and leave, documents, performance','Field sales tracking: calls, activity, screen time, visit planning','DSR visit verification: geo-pinned, photo-verified, auto-purge','AI & automation: lead scraper, blog generator, rate manager, lender matching','Lead allotment engine with employee workload view','Android app for field sales and team leads','iOS app for field sales and team leads','Dashboards for Admin/Ops, team leads and team monitoring','Deployment runbook, environment setup and technical documentation'];
+$('#dlist').innerHTML = DELIV.map((d,i)=>`<li><b class="num">${i+1}</b><span>${d}</span></li>`).join('');
+const STACK=[['Web frontend','Next.js 14, Tailwind CSS, existing Sora / DM Sans design tokens'],['Backend & data','Supabase (Postgres + row-level security) with an API layer for every module'],['AI','Claude AI for ARIA chat, CIBIL PDF analysis and policy matching'],['Messaging','WATI (WhatsApp Business API) for lead capture and campaigns'],['Payments','Payment gateway for wallet recharge, with auto-deduction and ledger'],['Mobile','Android + iOS (React Native or Flutter) on the same backend APIs'],['Hosting','Vercel and Supabase, staging + production, CI/CD pipeline']];
+$('#stack').innerHTML = STACK.map(r=>`<tr><th>${r[0]}</th><td>${r[1]}</td></tr>`).join('');
+
+/* ===== v2.1: more roles, guided tour, efficiency tools ===== */
+function freshAll(){
+  const s = freshState();
+  s.screen.tl = 'team'; s.screen.cust = 'emi';
+  s.field.offline = false;
+  s.tl = {
+    team:[
+      {name:'Rahul Verma',status:'visit',where:'Sanjay Traders, Uttam Nagar',calls:6,visits:[2,6]},
+      {name:'Pooja Singh',status:'route',where:'Heading to Janakpuri',calls:11,visits:[3,6]},
+      {name:'Simran Kaur',status:'visit',where:'Mehta Medicos, Dwarka Sec 23',calls:9,visits:[4,6]},
+      {name:'Nisha Rawat',status:'route',where:'Heading to Palam',calls:14,visits:[3,5]},
+      {name:'Arjun Mehta',status:'idle',where:'No movement since 11:00 AM',calls:2,visits:[1,6]},
+      {name:'Vikram Joshi',status:'off',where:'Not checked in today',calls:0,visits:[0,5]}
+    ],
+    alerts:[
+      {id:'a1',lvl:'bad',t:'Vikram Joshi has not checked in',s:'Shift started at 9:30 AM',who:'Vikram Joshi'},
+      {id:'a2',lvl:'warn',t:'Low activity: Arjun Mehta',s:'2 calls, no movement since 11:00 AM',who:'Arjun Mehta'},
+      {id:'a3',lvl:'warn',t:'Missed visit: Balaji Hardware',s:'Planned for Simran Kaur at 12:00 PM',who:'Simran Kaur'}
+    ],
+    nudged:{},
+    approvals:[
+      {id:'p1',type:'Leave request',who:'Pooja Singh',what:'Casual leave · 18–19 Nov (2 days)',why:'Family function',status:'pending'},
+      {id:'p2',type:'Visit plan change',who:'Nisha Rawat',what:'Move 4:00 PM visit from Palam to Mahavir Enclave',why:'Customer asked to reschedule',status:'pending'},
+      {id:'p3',type:'New joiner',who:'Karan Malik',what:'Field executive · KYC and offer letter uploaded',why:'Activate app login for Delhi West',status:'pending'},
+      {id:'p4',type:'Leave request',who:'Arjun Mehta',what:'Half day · 20 Nov, afternoon',why:'Bank work',status:'pending'}
+    ],
+    board:[
+      {name:'Nisha Rawat',disb:6,target:8,calls:212},
+      {name:'Pooja Singh',disb:5,target:8,calls:240},
+      {name:'Simran Kaur',disb:5,target:8,calls:198},
+      {name:'Rahul Verma',disb:4,target:8,calls:176},
+      {name:'Arjun Mehta',disb:2,target:8,calls:121},
+      {name:'Vikram Joshi',disb:1,target:8,calls:88}
+    ]
+  };
+  s.ops.campaigns = [
+    {id:'c1',name:'Diwali business loan offer',ch:'wa',aud:'Business owners · Delhi West',status:'Live',sent:4200,leads:186,cpl:42,conv:7.5},
+    {id:'c2',name:'Home loan balance transfer',ch:'sms',aud:'Home loan interest · Noida',status:'Live',sent:9800,leads:121,cpl:58,conv:5},
+    {id:'c3',name:'CIBIL check reminder',ch:'mail',aud:'Leads stuck at Contacted',status:'Ended',sent:3100,leads:64,cpl:21,conv:9.4}
+  ];
+  s.cust = {amt:1000000, rate:11.5, years:5, applied:null, prefill:null, typing:false,
+    chat:[{me:false,t:'Hi, I’m ARIA, FLOCRED’s loan assistant. Ask me about EMIs, eligibility, documents or your CIBIL score.'}]};
+  return s;
+}
+Object.assign(IC,{
+  globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.7 5.6 3.7 9s-1.2 6.4-3.7 9c-2.5-2.6-3.7-5.6-3.7-9S9.5 5.6 12 3z"/>',
+  grid:'<rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/>',
+  chat:'<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.9A8 8 0 1 1 21 12z"/>',
+  calc:'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8.5 7h7M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01M8.5 15.5h.01M12 15.5h.01M15.5 15.5h.01"/>',
+  doc:'<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',
+  megaphone:'<path d="M3 10.5v3l11 5.5V5z"/><path d="M17 9a3.5 3.5 0 0 1 0 6M6.5 14.8V19h3v-2.7"/>',
+  trophy:'<path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7"/>',
+  checkc:'<circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.8 2.8L16 9.5"/>',
+  wifioff:'<path d="M3 3l18 18M8.5 16.2a5 5 0 0 1 7 0M5 12.6a10 10 0 0 1 4.6-2.5M14.5 10.2a10 10 0 0 1 4.5 2.4M2 9a15 15 0 0 1 4-2.6M11 5.1A15 15 0 0 1 22 9M12 20h.01"/>',
+  eye:'<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+  alert:'<path d="M12 3.5l9 16H3z"/><path d="M12 10v4.5M12 17.5h.01"/>',
+  arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>'
+});
+const ROLE_ORDER = [['field','Field','pin'],['tl','Team lead','users'],['ops','Ops','grid'],['dsa','DSA','wallet'],['cust','Customer','globe']];
+ROLES.tl = {
+  bar:{init:'AK',name:'Anil Kumar',sub:'Team Lead · Delhi West · 6 executives'},
+  tabs:[['team','Live team','users'],['approvals','Approvals','checkc'],['board','Targets','trophy']],
+  explain:{
+    team:['Team lead: live team view','Each executive’s status at a glance: on a visit, travelling, idle or not checked in. Problems show up as alerts, so the team lead acts before the day is lost.',['Tap Nudge on an alert to send a reminder to that phone','Green is on a visit, blue travelling, amber idle, red not checked in'],'SOW §3.7 Team Lead dashboards and exception alerts'],
+    approvals:['Team lead: approvals','Leave requests, visit-plan changes and new joiners wait in one queue and are approved from the phone in one tap.',['Approve or decline a request','Approved leave flows into HRMS attendance'],'SOW §3.6 HRMS: attendance, leave, onboarding'],
+    board:['Team lead: targets','Monthly disbursal targets and calling effort for every executive, ranked, so reviews take minutes instead of hours.',['Bars fill from live CRM data'],'SOW §3.6 Performance tracking · §3.10 Employee Target']
+  }
+};
+ROLES.cust = {
+  bar:{init:'FC',name:'flocred.com',sub:'Customer website with ARIA chat'},
+  tabs:[['emi','EMI','calc'],['apply','Apply','doc'],['aria','Ask ARIA','chat']],
+  explain:{
+    emi:['Customer: EMI calculator','Borrowers work out their EMI on the website. Starting rates come from the Live Rate Manager, so the site always matches what sales quotes.',['Move the sliders to change the EMI','Tap Apply for this loan to carry the amount into the form'],'SOW §3.1 EMI calculator · §3.9 Live Rate Manager'],
+    apply:['Customer: apply in a minute','A short form creates the lead, checks for duplicates and assigns it to the right field executive on its own.',['Fill the form and tap Check my offers','Then open the Field or Ops view to see the lead arrive'],'SOW §3.2 Lead ingestion · §3.3 auto-assignment'],
+    aria:['Customer: ARIA assistant','ARIA answers borrower questions at any hour and turns chats into leads. Replies here are samples of what ARIA says.',['Tap a suggested question or type your own'],'SOW §3.1 ARIA chat widget']
+  }
+};
+ROLES.ops.tabs.push(['camp','Campaigns','megaphone']);
+ROLES.ops.explain.camp = ['Ops: campaigns','Plan WhatsApp, SMS and email campaigns for an audience picked from CRM data, then see the leads, cost per lead and conversion each one brings.',['Tap New campaign and choose an audience','Every new lead is tagged to its campaign'],'SOW §3.5 Campaign management'];
+ROLES.field.explain.today[2][2] = 'Turn on Offline mode, check in, then turn it off to watch it sync';
+
+const TOUR = [
+  ['cust','apply','A customer applies on the website. Fill the form and tap Check my offers.'],
+  ['ops','allot','The lead reaches Ops, already assigned by zone and workload. Tap Auto-allot for the rest of the queue.'],
+  ['field','leads','The executive gets it on his phone. Tap a lead and log a call.'],
+  ['field','today','He visits the shop. Tap Check in on the next visit, then Check out.'],
+  ['ops','dsr','Ops verifies the visit in one tap. Open a pending visit and tap Mark verified.'],
+  ['ops','match','ARIA ranks the lenders for the file. Tap Approve & refer.'],
+  ['tl','team','The team lead sees everyone live. Tap Nudge on an alert.'],
+  ['dsa','wallet','DSAs unlock leads from a prepaid wallet. Tap Unlock on a lead.']
+];
+let tour = -1;
+function renderHint(E){
+  const h = $('#hint');
+  if(tour >= 0){
+    const t = TOUR[tour], here = t[0]===S.role && t[1]===S.screen[S.role];
+    h.innerHTML = here
+      ? `<span class="step num">${tour+1}/${TOUR.length}</span><span class="grow">${t[2]}</span>${tour>0?'<button class="ghost" data-tour="back">Back</button>':''}<button data-tour="${tour<TOUR.length-1?'next':'end'}">${tour<TOUR.length-1?'Next':'Finish'}</button>`
+      : `<span class="grow">Tour paused at step ${tour+1} of ${TOUR.length}</span><button class="ghost" data-tour="exit">Exit</button><button data-tour="resume">Resume</button>`;
+  } else {
+    h.innerHTML = `${ic('spark')}<span class="grow">Try: ${E[2][0]}</span><button class="ghost" data-tour="start">Tour</button>`;
+  }
+}
+function scrollToEl(el, off){ if(!el) return; window.scrollTo({top: el.getBoundingClientRect().top + scrollY - (off||70), behavior:'smooth'}); }
+function slider(id,l,min,max,step,v,d){ return `<div class="slider"><div class="top-row"><label for="${id}">${l}</label><output id="${id}-o" for="${id}" class="num">${d}</output></div><input type="range" id="${id}" min="${min}" max="${max}" step="${step}" value="${v}"></div>`; }
+document.addEventListener('click', e=>{
+  const b = e.target.closest('[data-tour]'); if(!b) return;
+  const a = b.dataset.tour, inDevice = !!b.closest('#device');
+  if(a==='end' || a==='exit'){ tour=-1; render(); toast(a==='end'?'Tour complete. Contact Alfa Team to discuss next steps.':'Tour closed. Explore on your own.'); return; }
+  tour = a==='start' ? 0 : a==='next' ? Math.min(TOUR.length-1, tour+1) : a==='back' ? Math.max(0, tour-1) : Math.max(0, tour);
+  const t = TOUR[tour]; closeSheet(true); S.role = t[0]; S.screen[t[0]] = t[1]; render();
+  if(!inDevice) scrollToEl($('#roles'));
+  else if($('#device').getBoundingClientRect().top < 0) scrollToEl($('#device'));
+});
+document.addEventListener('click', e=>{
+  const b = e.target.closest('[data-jump]'); if(!b) return;
+  const [r,s] = b.dataset.jump.split(':'); tour=-1; closeSheet(true); S.role=r; S.screen[r]=s; render(); scrollToEl($('#roles'));
+});
+SCREENS.field.today = function(){
+  const F=S.field, done=F.visits.filter(v=>v.status==='done').length, active=F.visits.find(v=>v.status==='active');
+  const vis = F.visits.map(v=>{
+    const cls = v.status==='done'?'done':v.status==='active'?'active':'';
+    let act='';
+    if(v.status==='planned') act=`<button class="btn btn-soft btn-sm" data-act="visit-in" data-id="${v.id}" ${active||F.checkedOut?'disabled':''}>${ic('pin')}Check in</button>`;
+    if(v.status==='active') act=`<button class="btn btn-primary btn-sm" data-act="visit-out" data-id="${v.id}">${ic('camera')}Check out</button>`;
+    const meta = v.status==='done'?`<span class="pill good">${ic('check')}Done${v.out?' · '+v.out:''}</span>`:v.status==='active'?`<span class="pill info">At location since ${v.in}</span>`:'';
+    const q = v.queued?`<span class="pill warn">${ic('wifioff')}Saved offline</span>`:'';
+    return `<div class="tl ${cls}"><div class="time num">${v.t.replace(' ','<br>')}</div><div class="dot"></div><div class="body"><div class="row"><div class="grow"><div style="font-weight:600">${v.name}</div><div class="muted">${v.area}</div></div>${act}</div>${meta||q?`<div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">${meta}${q}</div>`:''}${v.note?`<div class="sub" style="margin-top:4px">${v.note}</div>`:''}</div></div>`;
+  }).join('');
+  return `${F.offline?`<div class="offline-bar">${ic('wifioff')}No network. Work is saved on the phone and syncs later.</div>`:''}
+  <div class="card"><div class="row"><div class="grow"><div class="muted">Attendance · ${todayStr()}</div>
+    <div style="font-weight:600;margin-top:2px">${F.checkedOut?'Checked out at '+F.checkedOut:'Checked in '+F.checkIn+' · Dwarka branch'}</div>
+    <div class="muted" style="display:flex;gap:5px;align-items:center;margin-top:3px">${ic('pin')}Geo-tagged · 28.5921° N, 77.0460° E</div></div>
+    <button class="btn btn-ghost btn-sm" data-act="day-out" ${F.checkedOut?'disabled':''}>${F.checkedOut?'Day closed':'End day'}</button></div>
+    <div style="border-top:1px solid var(--line);margin-top:12px;padding-top:10px"><button class="switch" role="switch" aria-checked="${F.offline}" data-act="offline"><i></i>Offline mode (try it)</button></div></div>
+  <div class="aria-card"><div class="h">${ic('spark')}ARIA suggests</div><div style="font-weight:600">Call Priya Sharma before 1 PM</div><div class="sub">She asked for a call back today. Personal loan ₹3.5 L, salaried, CIBIL 650–699.</div><button class="btn btn-primary btn-sm" data-act="lead" data-id="2">${ic('phone')}Open and log call</button></div>
+  <div class="kpis">
+    <div class="kpi"><b class="num">${F.calls.length}<span style="font-size:13px;color:var(--ink-3)">/${F.target.calls}</span></b><span>Calls</span></div>
+    <div class="kpi"><b class="num">${done}<span style="font-size:13px;color:var(--ink-3)">/${F.target.visits}</span></b><span>Visits</span></div>
+    <div class="kpi"><b class="num">${F.leads.filter(l=>!l.lost&&l.stage<6).length}</b><span>Open leads</span></div>
+  </div>
+  <div class="card"><div class="card-h"><h4>Today’s visit plan</h4><span class="muted">${done} of ${F.visits.length} done</span></div>
+    <div class="bar good" style="margin-bottom:14px"><i style="width:${done/F.visits.length*100}%"></i></div>
+    <div class="timeline">${vis}</div></div>
+  <div class="notice info">${ic('shield')}<span>Visit photos are deleted automatically 48 hours after capture. Location and screen-time tracking run only with your written consent.</span></div>`;
+};
+
+SCREENS.tl = {
+  team(){
+    const T=S.tl, st={visit:['On a visit','sd-visit'],route:['Travelling','sd-route'],idle:['Idle','sd-idle'],off:['Not checked in','sd-off']};
+    const on=T.team.filter(m=>m.status==='visit'||m.status==='route').length, calls=T.team.reduce((a,m)=>a+m.calls,0), vd=T.team.reduce((a,m)=>a+m.visits[0],0), vp=T.team.reduce((a,m)=>a+m.visits[1],0);
+    return `<div class="kpis">
+      <div class="kpi"><b class="num">${on}/${T.team.length}</b><span>Active now</span></div>
+      <div class="kpi"><b class="num">${vd}/${vp}</b><span>Visits done</span></div>
+      <div class="kpi"><b class="num">${calls}</b><span>Calls today</span></div></div>
+    <div class="card"><div class="card-h"><h4>Needs your attention</h4><span class="muted">${T.alerts.length} alerts</span></div><div style="display:grid;gap:8px">
+      ${T.alerts.map(a=>`<div class="alert-item ${a.lvl==='warn'?'warn':''}">${ic('alert')}<div class="grow"><b>${a.t}</b>${a.s}</div>${T.nudged[a.id]?`<span class="pill good">Sent ${T.nudged[a.id]}</span>`:`<button class="btn btn-plain btn-sm" data-act="nudge" data-id="${a.id}" data-who="${a.who}">Nudge</button>`}</div>`).join('')}
+    </div></div>
+    <div class="card"><div class="card-h"><h4>Team right now</h4><span class="muted">Live</span></div><div class="list">
+      ${T.team.map(m=>`<div class="item"><span class="status-dot ${st[m.status][1]}"></span><div class="grow"><div class="t">${m.name}</div><div class="s">${st[m.status][0]} · ${m.where}</div></div><div style="text-align:right;flex:none"><div class="num sub">${m.visits[0]}/${m.visits[1]} visits</div><div class="muted num">${m.calls} calls</div></div></div>`).join('')}
+    </div></div>`;
+  },
+  approvals(){
+    const A=S.tl.approvals, p=A.filter(a=>a.status==='pending').length;
+    return `<div class="card"><div class="row"><div class="grow"><div style="font-weight:600">${p?p+' waiting for you':'All caught up'}</div><div class="muted">Leave, plan changes and new joiners</div></div>${p?'':`<span class="pill good">${ic('check')}Done</span>`}</div></div>
+    ${A.map(a=>`<div class="card" style="display:grid;gap:10px"><div class="row"><div class="avatar" style="width:34px;height:34px">${a.who.split(' ').map(w=>w[0]).join('')}</div><div class="grow"><div style="font-weight:600">${a.who}</div><div class="muted">${a.type}</div></div>${a.status==='pending'?'<span class="pill warn">Pending</span>':a.status==='approved'?'<span class="pill good">Approved</span>':'<span class="pill bad">Declined</span>'}</div>
+      <div><div style="font-weight:500">${a.what}</div><div class="sub">${a.why}</div></div>
+      ${a.status==='pending'?`<div class="row" style="gap:8px"><button class="btn btn-primary btn-sm" style="flex:1" data-act="approve" data-id="${a.id}">${ic('check')}Approve</button><button class="btn btn-ghost btn-sm" style="flex:1" data-act="decline" data-id="${a.id}">Decline</button></div>`:''}</div>`).join('')}`;
+  },
+  board(){
+    const B=[...S.tl.board].sort((a,b)=>b.disb-a.disb||b.calls-a.calls), tot=B.reduce((a,m)=>a+m.disb,0), tgt=B.reduce((a,m)=>a+m.target,0), mon=new Date().toLocaleDateString('en-IN',{month:'long'});
+    return `<div class="card"><div class="card-h"><h4>Team target · ${mon}</h4><span class="num sub">${tot}/${tgt} disbursals</span></div><div class="bar"><i style="width:${tot/tgt*100}%"></i></div><div class="muted" style="margin-top:6px">${Math.round(tot/tgt*100)}% of the monthly target · ${tgt-tot} to go</div></div>
+    <div class="card"><div class="card-h"><h4>Leaderboard</h4><span class="muted">Disbursals this month</span></div><div class="list">
+      ${B.map((m,i)=>{const p=m.disb/m.target;return `<div class="item" style="display:grid;gap:6px"><div class="row"><span class="rank num">${i+1}</span><div class="grow"><div class="t">${m.name}</div><div class="s num">${m.calls} calls this month</div></div><b class="num">${m.disb}/${m.target}</b></div><div class="bar ${p>=.6?'good':p>=.4?'':'warn'}"><i style="width:${p*100}%"></i></div></div>`}).join('')}
+    </div></div>`;
+  }
+};
+
+SCREENS.ops.camp = function(){
+  const C=S.ops.campaigns, CH={wa:['WhatsApp','ch-wa','chat'],sms:['SMS','ch-sms','phone'],mail:['Email','ch-mail','send']};
+  const paid=C.filter(c=>c.cpl), leads=C.reduce((a,c)=>a+c.leads,0), avg=Math.round(paid.reduce((a,c)=>a+c.cpl*c.leads,0)/Math.max(1,paid.reduce((a,c)=>a+c.leads,0)));
+  return `<div class="kpis"><div class="kpi"><b class="num">${C.filter(c=>c.status==='Live').length}</b><span>Live now</span></div><div class="kpi"><b class="num">${leads}</b><span>Leads this month</span></div><div class="kpi"><b class="num">₹${avg}</b><span>Avg cost per lead</span></div></div>
+  <button class="btn btn-primary" data-act="camp-new">${ic('plus')}New campaign</button>
+  ${C.map(c=>`<div class="card camp"><div class="row"><span class="ch-ic ${CH[c.ch][1]}">${ic(CH[c.ch][2])}</span><div class="grow"><div style="font-weight:600">${esc(c.name)}</div><div class="muted">${CH[c.ch][0]} · ${esc(c.aud)}</div></div><span class="pill ${c.status==='Live'?'good':c.status==='Scheduled'?'info':''}">${c.status}</span></div>
+    ${c.status==='Scheduled'?`<div class="muted">Sends ${c.when} to about ${c.sent.toLocaleString('en-IN')} people. Replies become leads tagged to this campaign.</div>`:`<div class="kpis"><div class="kpi"><b class="num">${c.sent.toLocaleString('en-IN')}</b><span>Reached</span></div><div class="kpi"><b class="num">${c.leads}</b><span>Leads</span></div><div class="kpi"><b class="num">${c.conv}%</b><span>Converted</span></div></div>`}</div>`).join('')}`;
+};
+function campSheet(){
+  const d={ch:'wa',aud:['Business Loan interest'],when:'tomorrow at 10:00 AM'};
+  const AUD=['Business Loan interest','Home Loan interest','Delhi West','Noida','Gurgaon','Stuck at Contacted','Docs pending'];
+  const TPL={wa:'Hi {name}, this is FLOCRED. Business loans with quick approval from 50+ lenders. Reply YES and our loan expert will call you today.',sms:'FLOCRED: Check your loan eligibility in 60 seconds at flocred.com',mail:'Subject: Your loan options are ready\n\nHi {name}, we found lenders that match your profile. Book a free call with a FLOCRED loan expert.'};
+  const NAME={wa:'WhatsApp',sms:'SMS',mail:'Email'};
+  const size=()=>Math.round(2400*Math.pow(.62,d.aud.length-1)/10)*10;
+  const draw=()=>`<div><h3>New campaign</h3><div class="sub">Pick a channel and an audience from CRM data.</div></div>
+    <div><div style="font-weight:600;margin-bottom:8px">Channel</div><div class="opt-grid" style="grid-template-columns:repeat(3,minmax(0,1fr))">${Object.keys(NAME).map(k=>`<button class="opt" data-sheet="ch" data-v="${k}" aria-pressed="${d.ch===k}">${NAME[k]}</button>`).join('')}</div></div>
+    <div><div style="font-weight:600;margin-bottom:8px">Audience</div><div style="display:flex;flex-wrap:wrap;gap:6px">${AUD.map(a=>`<button class="chip" data-sheet="aud" data-v="${a}" aria-pressed="${d.aud.includes(a)}">${a}</button>`).join('')}</div><div class="muted num" style="margin-top:8px">About ${size().toLocaleString('en-IN')} people match</div></div>
+    <div><div style="font-weight:600;margin-bottom:8px">Approved template</div><div class="tpl">${TPL[d.ch]}</div></div>
+    <button class="btn btn-primary" data-sheet="go">Schedule for ${d.when}</button>
+    <button class="btn btn-ghost" data-sheet="close">Cancel</button>`;
+  openSheet(draw());
+  const sh=sheetEl.querySelector('.sheet');
+  sheetEl.addEventListener('click', e=>{
+    const b=e.target.closest('[data-sheet]'); if(!b) return; const a=b.dataset.sheet;
+    if(a==='ch'){ d.ch=b.dataset.v; sh.innerHTML='<div class="grab"></div>'+draw(); return; }
+    if(a==='aud'){ const v=b.dataset.v; if(d.aud.includes(v)){ if(d.aud.length>1) d.aud=d.aud.filter(x=>x!==v); } else d.aud.push(v); sh.innerHTML='<div class="grab"></div>'+draw(); return; }
+    if(a==='go'){ S.ops.campaigns.unshift({id:'c'+Date.now(),name:d.aud[0]+' · '+NAME[d.ch],ch:d.ch,aud:d.aud.join(' · '),status:'Scheduled',sent:size(),leads:0,when:d.when}); toast('Campaign scheduled · its leads will be tagged automatically'); }
+    closeSheet(); render();
+  });
+}
+function emiCalc(P,r,y){ const m=r/1200, n=y*12, f=Math.pow(1+m,n), e=m?P*m*f/(f-1):P/n; return {e, total:e*n, int:e*n-P}; }
+const yrs = y => y+' year'+(y>1?'s':'');
+SCREENS.cust = {
+  emi(){
+    const C=S.cust, r=emiCalc(C.amt,C.rate,C.years), pp=C.amt/r.total*100;
+    return `<div class="card" style="display:grid;gap:14px">
+      <div><div class="muted">Your monthly EMI</div><div class="emi-big num" id="emiOut">${inr(r.e)}</div></div>
+      ${slider('emiAmt','Loan amount',100000,10000000,50000,C.amt,lakh(C.amt))}
+      ${slider('emiRate','Interest rate (per year)',8,24,0.25,C.rate,C.rate+'%')}
+      ${slider('emiYrs','Tenure',1,20,1,C.years,yrs(C.years))}
+      <div><div class="split"><span class="p" id="sp1" style="width:${pp}%"></span><span class="i2" id="sp2" style="width:${100-pp}%"></span></div>
+      <div class="legend"><span><i style="background:var(--accent)"></i>Principal <b class="num" id="emiP">${inr(C.amt)}</b></span><span><i style="background:var(--warn)"></i>Interest <b class="num" id="emiI">${inr(r.int)}</b></span></div></div>
+      <button class="btn btn-primary" data-act="emi-apply">Apply for this loan ${ic('arrow')}</button>
+    </div>
+    <div class="card"><div class="card-h"><h4>Starting rates today</h4><span class="muted">From Live Rate Manager</span></div><div class="list">
+      ${[['Business Loan','14%'],['Personal Loan','10.5%'],['Home Loan','8.5%'],['Loan Against Property','9.25%']].map(x=>`<div class="item"><div class="grow"><div class="t" style="font-weight:500">${x[0]}</div></div><b class="num">${x[1]} onwards</b></div>`).join('')}
+    </div><div class="muted" style="margin-top:8px">Sample rates for this demo. FLOCRED sets the real ones once in the Live Rate Manager.</div></div>`;
+  },
+  apply(){
+    const C=S.cust;
+    if(C.applied){ const a=C.applied;
+      const steps=[['Lead received from website',a.t],['Duplicate check passed','+0.4 s'],['Zone found: '+a.zone,'+0.6 s'],['Assigned to '+a.emp+', lowest workload','+1.1 s'],['Push alert sent to '+a.emp.split(' ')[0]+'’s phone','+1.3 s'],['Tagged to source: Website','+1.4 s']];
+      return `<div class="card" style="display:grid;gap:10px"><span class="pill good" style="justify-self:start">${ic('check')}Application received</span><div style="font-family:var(--f-display);font-size:20px;font-weight:600">Thanks, ${esc(a.name.split(' ')[0])}. Your loan expert will call you shortly.</div><div class="muted num">Reference ${a.ref}</div></div>
+      <div class="card"><div class="card-h"><h4>What happened behind the scenes</h4><span class="muted">1.4 seconds</span></div><div class="timeline">
+        ${steps.map(s=>`<div class="tl done"><div class="time num">${s[1]}</div><div class="dot"></div><div class="body"><div style="font-weight:600;font-size:14.5px">${s[0]}</div></div></div>`).join('')}
+      </div></div>
+      ${a.emp==='Rahul Verma'?`<button class="btn btn-primary" data-act="see" data-go="field:leads">See it in Rahul’s app ${ic('arrow')}</button>`:''}
+      <button class="btn btn-soft" data-act="see" data-go="ops:allot">See it in Ops allotment ${ic('arrow')}</button>
+      <button class="btn btn-ghost" data-act="apply-again">Submit another application</button>`;
+    }
+    return `<div class="card"><div style="font-family:var(--f-display);font-size:19px;font-weight:600">Get the best loan offer</div><div class="sub" style="margin-top:2px">Free, and takes about a minute.</div>
+      <form class="form-grid" id="applyform" style="margin-top:14px" novalidate>
+        <div class="field"><label for="ap-name">Full name</label><input id="ap-name" autocomplete="off" placeholder="e.g. Rajesh Kumar"></div>
+        <div class="field"><label for="ap-phone">Mobile number</label><input id="ap-phone" inputmode="numeric" maxlength="10" autocomplete="off" placeholder="10-digit number"></div>
+        <div class="field"><label for="ap-prod">Loan type</label><select id="ap-prod"><option>Business Loan</option><option>Personal Loan</option><option>Home Loan</option><option>Loan Against Property</option></select></div>
+        <div class="field"><label for="ap-amt">Amount needed (₹)</label><input id="ap-amt" inputmode="numeric" autocomplete="off" value="${C.prefill||''}" placeholder="e.g. 500000"></div>
+        <div class="field"><label for="ap-city">Area</label><select id="ap-city"><option value="Delhi West">Dwarka / Janakpuri (Delhi West)</option><option value="Noida">Noida</option><option value="Gurgaon">Gurgaon</option></select></div>
+        <div class="err" id="ap-err" hidden></div>
+        <button class="btn btn-primary" type="submit">Check my offers</button>
+        <span class="muted">Demo only. Nothing leaves this page.</span>
+      </form></div>`;
+  },
+  aria(){
+    const C=S.cust;
+    return `<div class="chat" id="chat">${C.chat.map(m=>`<div class="msg-b ${m.me?'me':'bot'}">${m.me?esc(m.t):m.t}</div>`).join('')}${C.typing?'<div class="msg-b bot"><span class="typing"><i></i><i></i><i></i></span></div>':''}</div>
+    <div class="chips wrapq">${['What will my EMI be?','Am I eligible?','Which documents?','How does CIBIL affect me?','Talk to a person'].map(q=>`<button class="chip" data-act="aria-q" data-q="${q}">${q}</button>`).join('')}</div>
+    <form class="chat-input" id="chatform"><input id="chatIn" autocomplete="off" placeholder="Ask ARIA about loans" aria-label="Message ARIA"><button class="btn btn-primary btn-sm" type="submit" aria-label="Send">${ic('send')}</button></form>`;
+  }
+};
+const ARIA_A = [
+  [/emi|instal|monthly/i, ()=>{ const C=S.cust, r=emiCalc(C.amt,C.rate,C.years); return `For ${lakh(C.amt)} over ${yrs(C.years)} at ${C.rate}%, your EMI is about ${inr(r.e)} a month. You can change these numbers on the EMI tab.`; }],
+  [/person|human|talk|agent|expert/i, ()=>'Sure. Leave your number on the Apply tab and a FLOCRED loan expert in your area will call you back.'],
+  [/eligib|qualif/i, ()=>'Lenders mainly look at your CIBIL score, steady income (salary, or 2+ years in business) and your current EMIs. Apply on the next tab and we compare offers from 50+ lenders for you.'],
+  [/document|paper|kyc/i, ()=>'Usually PAN and Aadhaar, 6 months of bank statements, and income proof: salary slips, or ITR for business owners. Your loan expert confirms the exact list for your lender.'],
+  [/cibil|credit|score/i, ()=>'A higher CIBIL score gets lower rates. 750+ usually gets the best offers, and 650–749 still has options. FLOCRED can read your CIBIL report and suggest how to improve it.'],
+  [/rate|interest/i, ()=>'Rates depend on the loan type, the lender and your profile. Today’s starting rates are on the EMI tab, updated live by FLOCRED.']
+];
+function ariaAsk(q){
+  const C=S.cust; if(C.typing) return;
+  C.chat.push({me:true,t:q}); C.typing=true; render(); scrollChat();
+  setTimeout(()=>{
+    C.typing=false; const hit=ARIA_A.find(x=>x[0].test(q));
+    C.chat.push({me:false,t:hit?hit[1]():'I can help with EMIs, eligibility, documents, rates and CIBIL. For anything else, a FLOCRED loan expert can call you. Use the Apply tab.'});
+    if(S.role==='cust' && S.screen.cust==='aria'){ render(); scrollChat(); }
+  }, 900);
+}
+function scrollChat(){ const c=$('#chat'), last=c&&c.lastElementChild; if(!last) return; const r=last.getBoundingClientRect(); if(r.bottom>innerHeight-150) window.scrollBy({top:r.bottom-innerHeight+170,behavior:'smooth'}); }
+
+const EXTRA = {
+  'visit-in'(b){ const F=S.field, v=F.visits.find(x=>x.id==b.dataset.id); v.status='active'; v.in=clock(new Date()); v.queued=F.offline; toast(F.offline?'Checked in offline · syncs when back online':'Checked in at '+v.name+' · location tagged'); },
+  'visit-out'(b){ const F=S.field, v=F.visits.find(x=>x.id==b.dataset.id); v.status='done'; v.out=clock(new Date()); v.note='Shop photo captured · deletes in 48h'; v.queued=v.queued||F.offline; toast(F.offline?'Visit saved on the phone':'Visit complete · '+v.name); },
+  offline(){ const F=S.field; F.offline=!F.offline; if(F.offline){ toast('Offline mode on. Keep working as usual.'); } else { const n=F.visits.filter(v=>v.queued).length; F.visits.forEach(v=>{ v.queued=false; }); toast(n?'Back online · '+n+' update'+(n>1?'s':'')+' synced':'Back online'); } },
+  nudge(b){ S.tl.nudged[b.dataset.id]=clock(new Date()); toast('Reminder sent to '+b.dataset.who+'’s phone'); },
+  approve(b){ const x=S.tl.approvals.find(y=>y.id===b.dataset.id); x.status='approved'; toast(x.type+' approved · '+x.who+' notified'); },
+  decline(b){ const x=S.tl.approvals.find(y=>y.id===b.dataset.id); x.status='declined'; toast(x.type+' declined · '+x.who+' notified'); },
+  'camp-new'(){ campSheet(); return false; },
+  'emi-apply'(){ S.cust.applied=null; S.cust.prefill=S.cust.amt; S.screen.cust='apply'; },
+  'apply-again'(){ S.cust.applied=null; },
+  see(b){ const [r,s]=b.dataset.go.split(':'); S.role=r; S.screen[r]=s; setTimeout(()=>{ if($('#device').getBoundingClientRect().top<0) scrollToEl($('#device')); },0); },
+  'aria-q'(b){ ariaAsk(b.dataset.q); return false; }
+};
+$('#screen').addEventListener('input', e=>{
+  const t=e.target; if(!/^emi/.test(t.id)) return; const C=S.cust;
+  if(t.id==='emiAmt') C.amt=+t.value; else if(t.id==='emiRate') C.rate=+t.value; else if(t.id==='emiYrs') C.years=+t.value;
+  const r=emiCalc(C.amt,C.rate,C.years), pp=C.amt/r.total*100;
+  $('#emiAmt-o').textContent=lakh(C.amt); $('#emiRate-o').textContent=C.rate+'%'; $('#emiYrs-o').textContent=yrs(C.years);
+  $('#emiOut').textContent=inr(r.e); $('#emiP').textContent=inr(C.amt); $('#emiI').textContent=inr(r.int);
+  $('#sp1').style.width=pp+'%'; $('#sp2').style.width=(100-pp)+'%';
+});
+$('#screen').addEventListener('submit', e=>{
+  if(e.target.id==='chatform'){ e.preventDefault(); const v=$('#chatIn').value.trim(); if(v) ariaAsk(v); return; }
+  if(e.target.id!=='applyform') return; e.preventDefault();
+  const name=$('#ap-name').value.replace(/[<>&"']/g,'').trim(), ph=$('#ap-phone').value.replace(/\D/g,''), prod=$('#ap-prod').value, amt=+$('#ap-amt').value.replace(/\D/g,''), zone=$('#ap-city').value, err=$('#ap-err');
+  let m=''; if(name.length<2) m='Enter your full name.'; else if(ph.length!==10) m='Enter a 10-digit mobile number.'; else if(!amt||amt<10000) m='Enter an amount of at least ₹10,000.';
+  if(m){ err.textContent=m; err.hidden=false; return; }
+  const O=S.ops, inZone=O.employees.filter(x=>x.zone===zone), c=inZone.filter(x=>x.load<x.max).sort((x,y)=>x.load/x.max-y.load/y.max)[0]||inZone[0];
+  c.load++;
+  const id=Date.now();
+  O.queue.unshift({id:'w'+id,name,product:prod,amt,zone,src:'Website',to:c.id});
+  if(c.name==='Rahul Verma') S.field.leads.unshift({id,name,product:prod,amt,area:'Dwarka',stage:0,phone:ph.slice(0,2)+'•••••'+ph.slice(7),src:'Website · just now'});
+  S.cust.applied={name,ref:'FL-'+(20400+Math.floor(Math.random()*90)),t:clock(new Date()),zone,emp:c.name};
+  S.cust.prefill=null; toast('Lead created and assigned to '+c.name); render();
+});
+
+/* static sections */
+const JOURNEY = [
+  ['globe','Customer','Applies on flocred.com','Checks the EMI, chats with ARIA and applies in about a minute.','cust','apply'],
+  ['shuffle','System','Lead assigned in seconds','Duplicates removed, then routed by zone and each executive’s workload.','ops','allot'],
+  ['phone','Field executive','Calls and visits','Gets a push alert, logs calls, and checks in at the shop with a photo.','field','today'],
+  ['pin','Ops','Visit verified','Geo-tagged proof checked in one tap. Photos auto-delete after 48 hours.','ops','dsr'],
+  ['spark','ARIA','Best lenders ranked','Eligible lenders ranked by match score for Ops to approve.','ops','match'],
+  ['users','Team lead','Team kept on track','Live status, alerts for missed visits, approvals in a tap.','tl','team'],
+  ['funnel','Management','Results visible live','Funnel, turnaround time and lost reasons by zone and product.','ops','pipeline'],
+  ['wallet','DSA','Commission paid','Connectors track referrals and request payouts themselves.','dsa','payouts']
+];
+$('#journeyList').innerHTML = JOURNEY.map(j=>`<div class="j-step"><div class="j-ic">${ic(j[0])}</div><div class="j-body"><span class="who">${j[1]}</span><b>${j[2]}</b><p>${j[3]}</p><button class="btn btn-ghost btn-sm j-go" data-jump="${j[4]}:${j[5]}">See this screen ${ic('arrow')}</button></div></div>`).join('');
+const BA = [
+  ['users','Leads','Leads arrive on WhatsApp, the website, calls and from connectors, and someone forwards them by hand.','One inbox. Duplicates removed. Every lead assigned by zone and workload within seconds.'],
+  ['pin','Field visits','Visit reports come in as messages and photos that are hard to check.','Geo-tagged check-in, photo proof and one-tap verification, with photos auto-deleted after 48 hours.'],
+  ['spark','Lender choice','Matching each file against 50+ lender policies depends on memory.','ARIA lists the eligible lenders ranked by match score, with the reasons.'],
+  ['eye','Team visibility','Team leads phone each executive to find out where they are.','A live team view with alerts for missed visits, low activity and late check-ins.'],
+  ['wallet','DSAs & payouts','Commission and payout questions take calls and spreadsheets.','DSAs see every referral and payout themselves, and pay per use from a wallet.'],
+  ['megaphone','Marketing','It is hard to tell which campaign brought in which loan.','Every lead is tagged to its campaign, with cost per lead and conversion.']
+];
+$('#baGrid').innerHTML = BA.map(b=>`<div class="ba"><h3>${ic(b[0])}${b[1]}</h3><div class="row2 b"><span class="tg">Without</span><span>${b[2]}</span></div><div class="row2 a"><span class="tg">With v2</span><span>${b[3]}</span></div></div>`).join('');
+const CALC = [['cFse','Field executives',10,100,1,40,v=>v],['cTl','Team leads',2,30,1,10,v=>v],['cLeads','Leads per month',200,5000,100,1500,v=>v.toLocaleString('en-IN')],['cRep','Minutes saved per executive per day',10,60,5,30,v=>v+' min']];
+$('#calcIn').innerHTML = CALC.map(c=>slider(c[0],c[1],c[2],c[3],c[4],c[5],c[6](c[5]))).join('');
+function calc(){
+  const v=id=>+$('#'+id).value, fse=v('cFse'), tl=v('cTl'), leads=v('cLeads'), rep=v('cRep');
+  CALC.forEach(c=>{ $('#'+c[0]+'-o').textContent=c[6](v(c[0])); });
+  const exMin=fse*rep*26, hrs=(exMin+tl*45*26+leads*6)/60;
+  $('#c-hours').textContent=Math.round(hrs).toLocaleString('en-IN');
+  $('#c-fte').textContent=(hrs/208).toFixed(1);
+  $('#c-visits').textContent=Math.round(exMin/40).toLocaleString('en-IN');
+}
+$('#calcIn').addEventListener('input', calc); calc();
+
+const TICKS = ['New WhatsApp lead · Business Loan ₹12 L · auto-assigned to Rahul (Dwarka) in 2 sec','Visit verified · Sharma Electronics, Dwarka Sec 6 · photo auto-deletes in 48 h','ARIA ranked 6 lenders for Amit Khanna · best match 93/100','Connector Mehta Finserv requested a ₹6,400 payout','Alert · Vikram Joshi not checked in · team lead notified','Campaign “Diwali business loan offer” · 186 leads at ₹42 each'];
+const tk=$('#tick'); let ti=0;
+if(tk && !matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(()=>{ tk.classList.add('out'); setTimeout(()=>{ ti=(ti+1)%TICKS.length; tk.textContent=TICKS[ti]; tk.classList.remove('out'); },300); },3400);
+
+$('#copyNum').addEventListener('click', ()=>{
+  const n='+91 95683 06670', sel=()=>{ const r=document.createRange(); r.selectNodeContents($('#phoneNum')); const s=getSelection(); s.removeAllRanges(); s.addRange(r); toast('Number selected. Copy it from the menu.'); };
+  try{ navigator.clipboard.writeText(n).then(()=>toast('Number copied'), sel); }catch(_){ sel(); }
+});
+$('#resetDemo').addEventListener('click', ()=>{ S=freshAll(); tour=-1; closeSheet(true); render(); toast('Demo reset to the starting data'); });
+document.querySelectorAll('[data-ic]').forEach(el=>{ el.outerHTML=ic(el.dataset.ic); });
+render();
+})();
+</script>
+</body>
+</html>
